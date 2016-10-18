@@ -304,7 +304,7 @@ LOOP    -- diplôme non validé => non classé
                             i_ip_cod, c_cg_ran)
     VALUES ( c_rec.g_cn_cod, o_c_gp_cod,4,NULL );
     EXCEPTION -- Si le candidat est déjà non classé, on ne met à jour
-    WHEN UNIOUE_CONSTRAINT
+    WHEN UNIQUE_CONSTRAINT
     THEN NULL;
     END;
   ELSE
