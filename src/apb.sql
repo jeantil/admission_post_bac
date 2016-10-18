@@ -38,8 +38,8 @@ i               NUMBER;
 IS_prod         NUMBER;
 l_six_voe       NUMBER;
 
-UNIOUE CONSTRAINT EXCEPTION;
-PRAGMA EXCEPTION_INIT (UNIOUE_CONSTRAINT, -00001);
+UNIQUE CONSTRAINT EXCEPTION;
+PRAGMA EXCEPTION_INIT (UNIQUE_CONSTRAINT, -00001);
 
 --classement aléatoire sur voeu 1 groupé relatif
 CURSOR classement_aleatoire_efe IS
@@ -274,7 +274,7 @@ LOOP BEGIN
   C. rec.g. cn Cod, O C_gp Cod,
   5, i);
   EXCEPTION -- Si le Candidat est déjà indiqué à classer, on met à jour le i_ip_cod et le rang sur la ligne existante
-  WHEN UNIOUE_CONSTRAINT
+  WHEN UNIQUE_CONSTRAINT
   THEN 
     X:='07';
     UPDATE c_can_grp
@@ -308,7 +308,7 @@ LOOP -- diplôme non validé => non classé
                             i_ip_cod, c_cg_ran)
     VALUES ( c_rec.g_cn_cod, o_c_gp_cod,4,NULL );
     EXCEPTION -- Si le candidat est déjà non classé, on ne met à jour
-    WHEN UNIOUE_CONSTRAINT
+    WHEN UNIQUE_CONSTRAINT
     THEN NULL;
     END;
   ELSE
@@ -318,7 +318,7 @@ LOOP -- diplôme non validé => non classé
                              i_ip_cod, c_cg_ran)
       VALUES (c.rec_g_cn_cod, o_c_gp_cod,5, i);
       EXCEPTION -- Si le Candidat est déjà à classer, on ne met à jour
-      WHEN UNIOUE_CONSTRAINT
+      WHEN UNIQUE_CONSTRAINT
       THEN X:='10';
         UPDATE c_can_grp
         SET iip Cod=5,
