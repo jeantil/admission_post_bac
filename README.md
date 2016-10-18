@@ -3,7 +3,7 @@
 Code source d'Admission post-bac envoyé par le ministère de l'Education
 nationale
 
-Code soure publié
+Code source publié
 ---
 En [PDF](http://api.rue89.nouvelobs.com/sites/news/files/assets/document/2016/10/algorithme.pdf) qui contient un scan du code imprimé parcequ'on est en 2016
 Article sur rue 80 :  http://rue89.nouvelobs.com/2016/10/18/voici-code-source-dapb-tenu-secret-jusqua-present-265443
@@ -19,9 +19,9 @@ Pour ceux qui veulent vérifier que l'algo est complet : [PDF ](http://api.rue89
 [#1 ](http://rue89.nouvelobs.com/2016/10/18/voici-code-source-dapb-tenu-secret-jusqua-present-265443#comment-4856904)
 > après une lecture très rapide je m’étonne qu’on ne trouve pas de ligne DBMS_RANDOM.seed (j’ai pu passer à coté). Ça m’embête : quand on veut générer des données aléatoires il vaut mieux modifier la graine du générateur avec une donnée susceptible de changer d’un test à l’autre sinon on va générer les mêmes données (soit disant aléatoire) à chaque appel ...
 >
-> Après il faut une connaissance fine des différents types de candidats (AEFE , EFE , FNS, IDF ...) pour comprendre dans quel ordre sont fait les classements , il y a quelques commentaires qui aident (les lignes qui commencent par « – »). Si vous êtes dans le groupe « réo-néeo » visiblement vous êtes mal traité et il y aura des modifications à faire !
+> Après il faut une connaissance fine des différents types de candidats (AEFE, EFE, FNS, IDF ...) pour comprendre dans quel ordre sont fait les classements, il y a quelques commentaires qui aident (les lignes qui commencent par « – »). Si vous êtes dans le groupe « réo-néeo » visiblement vous êtes mal traité et il y aura des modifications à faire !
 >
-> A noter la phrase « on est pas en base de prod » qui apparaît page 8 , le début du code correspond donc peut être à une fonction pour tester la répartition probablement des candidats (ça se fait sur certains concours) ensuite il y a une partie noté « en production ».
+> A noter la phrase « on n'est pas en base de prod » qui apparaît page 8, le début du code correspond donc peut être à une fonction pour tester la répartition probablement des candidats (ça se fait sur certains concours) ensuite il y a une partie noté « en production ».
 
 [#2](http://rue89.nouvelobs.com/2016/10/18/voici-code-source-dapb-tenu-secret-jusqua-present-265443#comment-4856938)
 > Probablement les « Réorientations » pour réo-néeo. Les bacheliers de l’année sont prioritaires (c’est assumé) par rapport aux réorientations.
@@ -33,9 +33,9 @@ _J'ai du mal à déduire de cet algo la structure de la BDD... l'idéal serait d
 [#3](http://rue89.nouvelobs.com/2016/10/18/voici-code-source-dapb-tenu-secret-jusqua-present-265443#comment-4856972)
 `En deux mots, il faut que l’éducation nationale envoie aussi la signification des variables d’entrées (ce qu’il y entre FUNCTION et RETURN NUMBER IS) et la traduction de champs utilisés (tout ce qui à la forme : c_fr_cod, g_fr_truc...)`
 -----
-Après il faut une connaissance fine des différents types de candidats (AEFE , EFE , FNS, IDF ...) pour comprendre dans quel ordre sont fait les classements , il y a quelques commentaires qui aident (les lignes qui commencent par « – »). Si vous êtes dans le groupe « réo-néeo » visiblement vous êtes mal traité et il y aura des modifications à faire !
+Après il faut une connaissance fine des différents types de candidats (AEFE , EFE , FNS, IDF ...) pour comprendre dans quel ordre sont fait les classements, il y a quelques commentaires qui aident (les lignes qui commencent par « – »). Si vous êtes dans le groupe « réo-néeo » visiblement vous êtes mal traité et il y aura des modifications à faire !
 
-A noter la phrase « on est pas en base de prod » qui apparaît page 8 , le début du code correspond donc peut être à une fonction pour tester la répartition probablement des candidats (ça se fait sur certains concours) ensuite il y a une partie noté « en production ».
+A noter la phrase « on n'est pas en base de prod » qui apparaît page 8 , le début du code correspond donc peut être à une fonction pour tester la répartition probablement des candidats (ça se fait sur certains concours) ensuite il y a une partie noté « en production ».
 #2
 
 Probablement les « Réorientations » pour réo-néeo. Les bacheliers de l’année sont prioritaires (c’est assumé) par rapport aux réorientations.
