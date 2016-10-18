@@ -1,4 +1,3 @@
-
 -- Génération automatique de classements aléatoires en production, pour les FNS
 -- ===================================
 
@@ -38,27 +37,27 @@ i               NUMBER;
 IS_prod         NUMBER;
 l_six_voe       NUMBER;
 
-UNIOUE CONSTRAINT EXCEPTION;
+UNIOUE_CONSTRAINT EXCEPTION;
 PRAGMA EXCEPTION_INIT (UNIOUE_CONSTRAINT, -00001);
 
---classement aléatoire sur voeu 1 groupé relatif
+-- classement aléatoire sur voeu 1 groupé relatif
 CURSOR classement_aleatoire_efe IS
 
 -- on traite d'abord les candidats AEFE s'il y en a
 SELECT c.g_cn_cod,
        a_ve_ord_vg_rel, -- Ordre du voeu avec voeux groupés relatifs licence
-       a_ve_ord_aff,    -– Ordre du voeu avec Voeux groupé relatif licence et tous les autres voeux
+       a_ve_ord_aff,    -- Ordre du voeu avec voeux groupé relatif licence et tous les autres voeux
        a_vg_ord,        -- Ordre du sous-voeu dans le voeu groupé
-       DBMS RANDOM.value(1,999999),
-       i.iep_cod
+       DBMS_RANDOM.value(1,999999),
+       i.i_ep_cod
 FROM g_can c, i_ins i, a_rec r, a_voe v
 WHERE i.g_ti_cod=o_g_ti_cod
 AND g_gf_cod=o_c_gp_cod
 AND i.g_cn_cod=c.g_cn_cod
-AND c.g_ic_cod > 0
+AND c.g_ic_cod > 0
 AND NVL(g_cn_flg_aefe, 0)=1 -- BaC EFE
-AND i_ep_cod IN (2, 3)      --Pointés recu (complet ou incomplet)
-AND i.i_is_val=1            --non encore classé
+AND i_ep_cod IN (2, 3)      -- Pointés recu (complet ou incomplet)
+AND i.i_is_val=1            -- non encore classé
 AND NOT EXISTS (SELECT 1 FROM c_can_grp
                WHERE i.g_cn_cod=g_cn_cod
                AND i.g_gf_cod=c_gp_cod
@@ -67,21 +66,21 @@ AND i.g_ti_cod=r.g_ti_cod
 AND c.g_cn_cod=v.g_cn_cod
 AND r.g_ta_cod=v.g_ta_cod
 UNION
-  -– les candidats EFE qui n ont au final pas classé la formation dans leur liste ordonnée. Ils sont classé, mais en dernier.
+  -– les candidats EFE qui n'ont au final pas classé la formation dans leur liste ordonnée. Ils sont classé, mais en dernier.
 SELECT c.g_cn_cod,
        0,
        0,
        0,
        DBMS RANDOM.value(1,999999),
-      i.iep_cod
+      i.i_ep_cod
 FROM g_can c, i_ins i, a_rec r
 WHERE i.g_ti_cod=o_g_ti_cod
 AND g_gf_cod=o_c_gp_cod
 AND i.g_cn_cod=c.g_cn_cod
-AND c.g_ic_cod > 0
+AND c.g_ic_cod > 0
 AND NVL(g_cn_flg_aefe, 0)=1 -- BaC EFE
-AND i_ep_cod IN (2, 3)      --Pointés recu (complet ou incomplet)
-AND i.i_is_val=1            --non encore classé
+AND i_ep_cod IN (2, 3)      -- Pointés recu (complet ou incomplet)
+AND i.i_is_val=1            -- non encore classé
 -- non encore Classé
 AND NOT EXISTS (SELECT 1 FROM c_can_grp
                 WHERE i.g_cn_cod=g_cn_cod
@@ -92,32 +91,26 @@ AND NOT EXISTS (SELECT 1 FROM a_voe v WHERE c.g_cn_cod=v.g_cn_cod AND r.g_ta_cod
 ORDER BY 2, 3, 4,5;
 
 
-/** **/
-/** **/
-/** **/
-/** **/
-/** **/
-
 CURSOR class_aleatoire_autres_cddts IS
 -- les candidats non classés par la requête ci-dessus : les autre bac que EEE
 
-SELECT C.g_cn_cod,
-  DECODE(l_six_voe, 1, six_voeu_L1(c.g_cn_cod, g_aa_cod_bac_int, g_cn_flg_int_aca,o_g_tg_cod), 0),
-  a_ve_ord_vg_rel, -– Ordre du voeu avec voeux groupés relatifs licence
-  a_ve_ord_aff, –- Ordre du voeu avec Voeux groupé relatif licence et tous les autres voeux
-  a_vg_ord, -- Ordre du sous-voeu dans le voeu groupé
+SELECT c.g_cn_cod,
+  DECODE(l_six_voe, 1, six_voeu_L1(c.g_cn_cod, g_aa_cod_bac_int, g_cn_flg_int_aca, o_g_tg_cod), 0),
+  a_ve_ord_vg_rel,  -– Ordre du voeu avec voeux groupés relatifs licence
+  a_ve_ord_aff,     –- Ordre du voeu avec Voeux groupé relatif licence et tous les autres voeux
+  a_vg_ord,         -- Ordre du sous-voeu dans le voeu groupé
   DBMS RANDOM.value(1,999999),
   i.i_ep_cod,
-  i.i_is_dip_val -- Pour ceux-ci on prend en plus en compte la validité du diplôme
+  i.i_is_dip_val    -- Pour ceux-ci on prend en plus en compte la validité du diplôme
 FROM g_can c, i_ins i, a_rec r, a_voe v
 WHERE i.g_ti_cod=o_g_ti_cod
 AND i.g_gf_cod=o_c_gp_cod
-AND i_ep_cod IN (2, 3) -- Pointés recu (complet ou incomplet)
-AND i.g_cn_cod=c.g_cn_cod
---TODO2016 => Traiter les groupes néo-réeo ensemble différement (voir Correction_classements_neo-reo.sql dans exploit/admissions/simulation/pb ponctuels)
+AND i_ep_cod IN (2, 3)    -- Pointés recu (complet ou incomplet)
+AND i.g_cn_cod=c.g_cn_cod
+-- TODO2016 => Traiter les groupes néo-réeo ensemble différement (voir correction_classements_neo-reo.sql dans exploit/admissions/simulation/pb ponctuels)
 AND c.g_ic_cod > 0
 AND i.i_is_val=1
---non encore classé
+-- non encore classé
 AND NOT EXISTS (SELECT 1 FROM c_can_grp
                 WHERE i.g_cn_cod=g_cn_cod
                 AND i.g_gf_cod=c_gp_cod
@@ -126,7 +119,7 @@ AND i.g_ti_cod=r.g_ti_cod
 AND c.g_cn_cod=v.g_cn_cod
 AND r.g_ta_cod=v.g_ta_cod
 UNION
--- les candidats qui n ont au final pas classé la formation dans leur liste ordonnée. Ils sont classé, mais en dernier.
+-- les candidats qui n'ont au final pas classé la formation dans leur liste ordonnée. Ils sont classé, mais en dernier.
 SELECT  c.g_cn_cod,
         0,
         0,
@@ -134,15 +127,15 @@ SELECT  c.g_cn_cod,
         0,
         DBMS_RANDOM.value(1,999999),
         i.i_ep_cod,
-        i.i_is_dip_val -- Pour ceux-ci on prend en plus en compte la validité du diplôme
+        i.i_is_dip_val  -- Pour ceux-ci on prend en plus en compte la validité du diplôme
 FROM g_can c, i_ins i, a_rec r
 WHERE i.g_ti_cod=o_g_ti_cod
 AND i.g_gf_cod=o_c_gp_cod
-AND i_ep_cod IN (2, 3) -- Pointés recu (complet ou incomplet)
-AND i.g_cn_cod=c.g_cn_cod
+AND i_ep_cod IN (2, 3)  -- Pointés recu (complet ou incomplet)
+AND i.g_cn_cod=c.g_cn_cod
 AND c.g_ic_cod > 0
 AND i.i_is_val=1
--- non enCOre Classé
+-- non encore classé
 AND NOT EXISTS (SELECT 1 FROM c_can_grp
                 WHERE i.g_cn_cod=g_cn_cod
                 AND i.g_gf_cod=c_gp_cod
@@ -153,41 +146,43 @@ ORDER BY 2 desc, 3, 4, 5, 6;
 
 BEGIN
   -- par défaut, on est pas en prod
-  IS prod:=0;
+  IS_prod:=0;
   -- On vérifie que si on force un classement, on n'est pas en base de prod
   X:='01';
   BEGIN
     SELECT DISTINCT 1 INTO dummy
-    FROM all catalog
+    FROM all_catalog
     WHERE OWNER IN ('XXXXXX');
     -- on est en prod
-    IS prod:=1;
-    -- on ne laisse passer qu'en indic = 10
+    IS_prod:=1;
+    -- on ne laisse passer qu'en indic = 10
     IF NVL(indic, 0) NOT IN (10)
     THEN mess_aff:='On ne peut forcer un classement sur la base d''exploitation.',
       ROLLBACK;
       RETURN 1;
     END IF;
-  EXCEPTION WHEN NO DATA FOUND THEN NULL;
+  EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
   END;
-  mess_aff:= 'Problème d''accès aux données, veuillez Vous reconnecter ultérieurement.';
-  -- On vérifie si le groupe est issu d''une formation de type IDF 2, 3, 5 ou 6 et s''il concerné par des néO d''IDF
+  mess_aff:= 'Problème d''accès aux données, veuillez vous reconnecter ultérieurement.';
+
+  -- On vérifie si le groupe est issu d''une formation de type IDF 2, 3, 5 ou 6 et s'il concerné par des néo d'IDF
   -- alors, on utilisera les six voeux dans le classement sur ordre des voeux
   BEGIN
-    Х:="02";
+    Х:='02';
     SELECT 1
     INTO l_six_voe
     FROM g_tri_ins ti
     WHERE g_ti_cod=o_g_ti_cod
     AND NVL(g_ti_flg_rec_idf, 0) IN (2, 3, 5, 6)
-    AND o_g_tig_cod IN (21, 25, 26, 41, 45,46);
+    AND o_g_tig_cod IN (21, 25, 26, 41, 45, 46);
 
   EXCEPTION
-  WHEN NO DATA FOUND
+  WHEN NO_DATA_FOUND
   THEN l_six_voe:=0; -- pour les autres groupes, on n'utilise pas les 6 voeux
-END;
+END;
+
 X:='03';
--- on vérifie que le classement ne soit pas déjà passé (pas de candidats classés dans C_can_grp)
+-- on vérifie que le classement ne soit pas déjà passé (pas de candidats classés dans c_can_grp)
 BEGIN
   -- Si le groupe est non sélectif, aucun candidat ne doit avoir été traité
   SELECT DISTINCT 1
@@ -202,14 +197,15 @@ BEGIN
   FROM c_can_grp cg, c_grp g
   WHERE g.c_gp_cod=o_c_gp_cod
   AND g.c_gp_cod=cg.c_gp_cod
-  AND NVL(c_gp_flg_sel, 0) IN (1,2)
+  AND NVL(c_gp_flg_sel, 0) IN (1, 2)
   AND i_ip_cod NOT IN (4, 6);
   mess_aff='Un classement a déjà été saisi pour le groupe de cette formation :'
-                          || o_g_ea_cod_ins||','||o_g_ti_cod||','|| o_c_gp_cod;
+                          ||o_g_ea_cod_ins||','||o_g_ti_cod||','|| o_c_gp_cod;
   ROLLBACK;
   RETURN 1;
-EXCEPTION WHEN NO DATA FOUND THEN NULL; -- ok
-END;
+EXCEPTION WHEN NO_DATA_FOUND THEN NULL;   -- ok
+END;
+
 -- c'est ok, on va générer. On commence par récupérer des infos en base
 BEGIN
   X:='04';
@@ -226,18 +222,18 @@ BEGIN
   AND ja.c_ja_cod=gp.c_ja_cod
   AND gp.c_gp_cod=o_c_gp_cod;
   EXCEPTION
-  WHEN NO DATA FOUND
-  THEN mess_aff:='Erreur de traitement, la ligne groupe n''existe pas : c_gp_Cod :'
+  WHEN NO_DATA_FOUND
+  THEN mess_aff:='Erreur de traitement, la ligne groupe n''existe pas : c_gp_cod :'
                     || o_c_gp Cod;
     ROLLBACK;
     RETURN 1;
 END;
-
+
 -- on vérifie les Conditions de traitement du groupe
 IF IS_prod=0 -- Base de test
 OR -- Ou
   -- en prod pour les classements formation non sélectives ou les AEFE
-  (IS prod=1 AND indic=10 AND l_g_flh_sel=0)
+  (IS_prod=1 AND indic=10 AND l_g_flh_sel=0)
 THEN NULL; -- on laisse passer. Dans tous les autre cas, c'est une erreur.
 ELSE mess_aff='On ne peut traiter ce type de classement aléatoire dans ces conditions :
 '||
@@ -245,6 +241,7 @@ ELSE mess_aff='On ne peut traiter ce type de classement aléatoire dans ces cond
   ROLLBACK;
   RETURN 1;
 END IF;
+
 -- on vérifie l'état de pointage des dossiers sion est en prod, on est obligé d'accepter
 -- des dossiers non reçus, pour les vérifs de diplômes
 X:='05';
@@ -257,28 +254,28 @@ AND i_ep_cod NOT IN(0, 2, 3, 7);
 
 IF dummy > 0
 THEN mess_aff:='Pb, des dossiers ne sont pas pointés : étab :'
-              || o_g_ea_cod_ins || ', for :' || o_g_ti_cod || ', grp : ' || o_c_gp_cod;
+              || o_g_ea_cod_ins || ', for :' || o_g_ti_cod || ', grp : ' || o_c_gp_cod;
   ROLLBACK;
   RETURN 1;
 END IF;
 
-I:=1;
+i:=1;
 
 X:='61';
 FOR c_rec IN classement_aleatoire_efe
 LOOP BEGIN
   INSERT INTO c_can_grp (
-  g Cn Cod, C. gp_Cod,
-  iip Cod, C CE ran)
+  g_cn_cod, c_gp_cod,
+  i_ip_cod, c_cg_ran)
   VALUES (
-  C. rec.g. cn Cod, O C_gp Cod,
+  c_rec.g_cn_cod, o_c_gp_cod,
   5, i);
-  EXCEPTION -- Si le Candidat est déjà indiqué à classer, on met à jour le i_ip_cod et le rang sur la ligne existante
+  EXCEPTION -- Si le candidat est déjà indiqué à classer, on met à jour le i_ip_cod et le rang sur la ligne existante
   WHEN UNIOUE_CONSTRAINT
-  THEN 
+  THEN
     X:='07';
     UPDATE c_can_grp
-    SET i_ip_Cod=5,
+    SET i_ip_cod=5,
         c_cg_ran=i
     WHERE g_cn_cod=c_rec.g_cn_cod
     AND c_gp_cod=o_c_gp_cod
@@ -287,8 +284,7 @@ LOOP BEGIN
     THEN mess_err:='pk_generation_classement.gen_class_alea_V1_relatif_grp
   X : (' || Х || ')'
                   ||'Erreur traitement d''un candidat AC pour l''étab'
-                  || o_g_ea_cod_ins ||' et la formation '|| o_g_ti_cod||':
-                 '|| o_c_gp_cod ||', le candidat'||c_rec.g_cn_cod
+                  || o_g_ea_cod_ins ||' et la formation '|| o_g_ti_cod||':'|| o_c_gp_cod ||', le candidat'||c_rec.g_cn_cod
                   ||' et le groupe : '||o_c_gp_cod||', rg :'||i;
         ROLLBACK;
         RETURN -1;
@@ -300,7 +296,7 @@ END LOOP;
 X:='08';
 
 FOR c_rec IN class_aleatoire_autres_cddts
-LOOP -- diplôme non validé => non classé
+LOOP    -- diplôme non validé => non classé
   IF c_rec.i_is_dip_val=1
   THEN BEGIN
     INSERT INTO c_can_grp (
@@ -314,20 +310,20 @@ LOOP -- diplôme non validé => non classé
   ELSE
     BEGIN
       Х:='09';
-      INSERT INTO c can grp (g_cn_cod, c_gp_cod,
+      INSERT INTO c_can_grp (g_cn_cod, c_gp_cod,
                              i_ip_cod, c_cg_ran)
-      VALUES (c.rec_g_cn_cod, o_c_gp_cod,5, i);
-      EXCEPTION -- Si le Candidat est déjà à classer, on ne met à jour
+      VALUES (c_rec.g_cn_cod, o_c_gp_cod,5, i);
+      EXCEPTION -- Si le candidat est déjà à classer, on ne met à jour
       WHEN UNIOUE_CONSTRAINT
       THEN X:='10';
         UPDATE c_can_grp
-        SET iip Cod=5,
-        C Cg ran=i
-        WHEREg_Cn Cod=c rec.g. cn Cod
-        AND C gp Cod=O C. gp Cod
-        AND iip cod=6;
+        SET i_ip_cod=5,
+        c_cg_ran=i
+        WHERE g_cn_cod=c_rec.g_cn_cod
+        AND c_gp_cod=o_c_gp_cod
+        AND i_ip_cod=6;
         IF SOL%ROWCOUNT!=1
-        THEN
+        THEN
         mess_err:='pk_generation_classement.gen_class_alea_V1_relatif_grp X: ('||X||')'
                   ||'Erreur traitement d''un candidat AC pour l''étab'
                   || o_g_ea_cod_ins||' et la formation
@@ -348,13 +344,14 @@ retour:=pk_new_classement_commun.MAJ_etat_classement(
         l_c_ja_cod, l_c_tj_cod, o_c_gp_cod,
         2, 5,
         login, type_login, mode_dev,
-        confirm, saio,niр,
+        confirm, saio, niр,
         0, indic,
-        mess err, mess aff);
+        mess_err, mess_aff);
 IF retour!=0
-THEN ROLLBACK;
+THEN ROLLBACK;
   RETURN retour;
 END IF;
+
 -- On vérifie que le classement soit valide. la Trace est mise par cette PS
 X:='12';
 retour:=pk_new_classement_commun.valid_classement_def(
@@ -362,9 +359,9 @@ retour:=pk_new_classement_commun.valid_classement_def(
         l_c_ja_cod, l_c_tj_cod, o_c_gp_cod,
         5,
         login, type_login, mode_dev,
-        confirm, saio,niр,
+        confirm, saio, niр,
         0, indic,
-        mess err, mess aff);
+        mess_err, mess_aff);
 IF retourl!=0
 THEN ROLLBACK;
   RETURN retour;
@@ -374,9 +371,9 @@ X:='13';
 retour:=pk_new_classement_commun.valid_classement_formation(
         l_g_ea_cod_ges, o_g_ea_cod_ins, o_g_ti_cod, 5,
         login, type_login, mode_dev,
-        confirm, saio,niр,
+        confirm, saio, niр,
         0, indic,
-        mess err, mess aff);
+        mess_err, mess_aff);
 
 IF retour!=0
 THEN ROLLBACK;
@@ -395,9 +392,9 @@ COMMIT;
 RETURN 0;
 EXCEPTION
 WHEN OTHERS
-THEN mess err:='pk generation classement.gen class alea V1 relatif grp X: ('||X||')'
+THEN mess_err:='pk_generation_classement.gen_class_alea_V1_relatif_grp X: ('||X||')'
                 ||'Erreur ORACLE'||TO_CHAR(sqlcode)||''||sqlerrm||' pour l''étab'
-                ||o_g_ea_cod_ins||' et la formation'|| og ti Cod||': '||o_c_gp_cod;
+                ||o_g_ea_cod_ins||' et la formation'|| o_g_ti_cod||': '||o_c_gp_cod;
   ROLLBACK;
   RETURN -9;
 END gen_class_alea_V1_relatif_grp;
