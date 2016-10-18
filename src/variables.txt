@@ -1,0 +1,112 @@
+Pour plus de clarté, voici une liste couvrant la signification des variables
+utilisées dans la source de l'alogrithme admission-post-bac.
+Source: http://www.simulation-apb.fr/
+
+AEFE = étudiant du réseau de l'agence des étudiants français à l'étranger
+        établissement français à l'étranger (EFE)
+
+g_cn_cod      code du candidat inscription
+g_cn_cod_frm  code du candidat inscription
+g_ti_cod      code confidentiel inscription
+
+Etat civil
+=====
+g_cn_com_nai  commune de naissance
+g_cn_nat      nationalité française ?
+g_dp_cod      global département de naissance
+g_py_cod_nai  pays de naissance
+g_pay_nat     autre nationalité
+
+
+Coordonnées
+===========
+g_cn_ad1      coordonnées adresse
+g_cn_ad2      coordonnées adresse2
+g_cn_ad3      coordonnées adresse3
+g_cn_cod_pos  code postal
+g_cn_com code commune
+g_py_lib_ad   pays
+g_cn_tel      telephone
+g_cn_tel_por  portable
+g_cn_mel      adresse e-mail
+
+REPRÉSENTANTS LÉGAUX
+====================
+res_lp1       lien parenté premier représentant légal
+res_nom1      nom premier représentant légal
+res_pre1      prenom premier représentant légal
+i_cp_cod_rl1  catégorie socio-professionnelle premier représentant légal
+res_ad11      adresse
+res_ad21
+res_ad31
+res_pos1      code postal
+res_bur_dis1  commune
+res_pay1      pays
+g_cn_rl1_tel  téléphone
+g_cn_rl1_mel  email
+res_nom2
+
+CRITÈRES SOCIAUX
+================
+select_boursier boursier du gouvernement français ?
+g_cn_ech_brs    Echelon
+
+g_cn_rvn_brt    Revenu brut global
+g_cn_nbr_par    nombre de vos frères et soeurs encore à la charge de votre famille
+g_cn_nec        nombre de frères et soeurs scolarisés dans l'enseignement supérieur
+
+SCOLARITÉ
+=========
+g_po_cod          profil
+i_ne_cod          niveau d'étude
+g_cn_aut_etb      établissement
+g_cn_aut_etb_com  ville établissement
+g_dp_cod_aut_etb  département établissement
+g_py_cod_aut_etb  pays établissement
+g_cn_aut_etb_for  Intitulé de la formation
+i_sa_typ_bul      fréquence des bulletins scolaires
+g_cn_det_sco      détail scolarité
+
+SCOLARITÉ
+==========
+i_sa_flg_sco_fra  Scolarité française ou étrangère ?
+i_ne_cod          niveau d'étude
+i_at_cod          type d'établissement
+g_dp_cod_etb      département éttablissement
+g_ea_cod_rec      recherche de l'établissement par code
+g_ea_lib_rec      recherche de l'établissement par nom
+g_ea_com_rec      recherche de l'établissement par commune
+i_cl_cod          série terminale
+i_lv_cod_7_O      langue vivante1
+i_lv_cod_8_O      langue vivante2
+i_dm_cod          enseignement obligatoire
+b_tm_cod          option de classe suivie
+g_tf_cod          type de formation
+
+BACCALAURÉAT
+============
+g_cn_bac          Préparez-vous ou avez-vous obtenu un baccalauréat français ou un diplôme équivalent
+g_cn_moi_bac      Mois et
+g_cn_ann_bac      année d'obtention
+i_cl_cod_bac      serie bac
+g_py_cod_bac      pays bac
+i_de_cod          diplome
+i_mb_cod          mention au bac
+i_ce_lib_1        intitulé épreuve1 bac
+not_lib_1         note épreuve1 bac
+b_oe_cod          numero inscription au BAC (n° OCEAN)
+i_dm_cod_bac      dominante au bac
+i_sp_cod_bac      spécialité
+b_tm_cod_bac      option du bac
+i_mb_cod          mention au bac
+i_lv_cod_bac_un   langue vivante 1
+i_lv_cod_bac_deu  langue vivante 2
+
+RECHERCHE DE FORMATIONS
+=========
+g_tf_cod            par type de formation
+g_ea_cod            par établissement
+g_fr_cod            par filière
+g_tc_cod            par secteur
+i_lm_flg_sai_let_1  saisie lettre motivation
+
