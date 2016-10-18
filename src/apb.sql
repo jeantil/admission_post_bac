@@ -106,7 +106,7 @@ SELECT C.g_cn_cod,
   a_ve_ord_vg_rel, -– Ordre du voeu avec voeux groupés relatifs licence
   a_ve_ord_aff, –- Ordre du voeu avec Voeux groupé relatif licence et tous les autres voeux
   a_vg_ord, -- Ordre du sous-voeu dans le voeu groupé
-  DBMS RANDOM.value(1999999),
+  DBMS RANDOM.value(1,999999),
   i.i_ep_cod,
   i.i_is_dip_val -- Pour ceux-ci on prend en plus en compte la validité du diplôme
 FROM g_can c, i_ins i, a_rec r, a_voe v
