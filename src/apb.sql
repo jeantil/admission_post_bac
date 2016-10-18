@@ -100,8 +100,8 @@ CURSOR class_aleatoire_autres_cddts IS
 
 SELECT c.g_cn_cod,
 DECODE(l_six_voe, 1, six_voeu_L1(c.g_cn_cod, g_aa_cod_bac_int, g_cn_flg_int_aca, o_g_tg_cod), 0),
-a_ve_ord_vg_rel,  -– Ordre du voeu avec voeux groupés relatifs licence
-a_ve_ord_aff,     –- Ordre du voeu avec Voeux groupé relatif licence et tous les autres voeux
+a_ve_ord_vg_rel,  -- Ordre du voeu avec voeux groupés relatifs licence
+a_ve_ord_aff,     -- Ordre du voeu avec Voeux groupé relatif licence et tous les autres voeux
 a_vg_ord,         -- Ordre du sous-voeu dans le voeu groupé
 DBMS_RANDOM.value(1,999999),
 i.i_ep_cod,
