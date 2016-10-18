@@ -275,19 +275,20 @@ LOOP BEGIN
   5, i);
   EXCEPTION -- Si le Candidat est déjà indiqué à classer, on met à jour le i_ip_cod et le rang sur la ligne existante
   WHEN UNIOUE_CONSTRAINT
-  THEN X:='07';
-    UPDATE c can grp
-    SET i_ip Cod=5,
-    C Cg ran=i
-    WHEREg Cn cod=c rec.g. cn cod
-    AND C gp Cod=O C. gp Cod
-    AND iip cod=6;
-    IF SOL%ROWCOUNT!=1
-    THEN mess err:='pk_generation_classement.gen_class_alea_V1_relatif_grp
+  THEN 
+    X:='07';
+    UPDATE c_can_grp
+    SET i_ip_Cod=5,
+        c_cg_ran=i
+    WHERE g_cn_cod=c_rec.g_cn_cod
+    AND c_gp_cod=o_c_gp_cod
+    AND i_ip_cod=6;
+    IF SQL%ROWCOUNT!=1
+    THEN mess_err:='pk_generation_classement.gen_class_alea_V1_relatif_grp
   X : (' || Х || ')'
                   ||'Erreur traitement d''un candidat AC pour l''étab'
                   || o_g_ea_cod_ins ||' et la formation '|| o_g_ti_cod||':
-                 '||o_c_gp_cod||', le candidat'||c_rec.g_cn_cod
+                 '|| o_c_gp_cod ||', le candidat'||c_rec.g_cn_cod
                   ||' et le groupe : '||o_c_gp_cod||', rg :'||i;
         ROLLBACK;
         RETURN -1;
@@ -372,7 +373,7 @@ END IF;
 X:='13';
 retour:=pk_new_classement_commun.valid_classement_formation(
         l_g_ea_cod_ges, o_g_ea_cod_ins, o_g_ti_cod, 5,
-        login, type_login, mode_dev,
+        login, type_login, mode_dev,
         confirm, saio,niр,
         0, indic,
         mess err, mess aff);
@@ -396,8 +397,7 @@ EXCEPTION
 WHEN OTHERS
 THEN mess err:='pk generation classement.gen class alea V1 relatif grp X: ('||X||')'
                 ||'Erreur ORACLE'||TO_CHAR(sqlcode)||''||sqlerrm||' pour l''étab'
-                ||o_g_ea_cod_ins||' et la formation'|| og ti Cod||': '||o_c_gp_cod;
+                ||o_g_ea_cod_ins||' et la formation'|| og ti Cod||': '||o_c_gp_cod;
   ROLLBACK;
   RETURN -9;
 END gen_class_alea_V1_relatif_grp;
-
