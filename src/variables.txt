@@ -9,6 +9,8 @@ g_cn_cod      code du candidat inscription
 g_cn_cod_frm  code du candidat inscription
 g_ti_cod      code confidentiel inscription
 
+i_ip_cod        Etat (des voeux?) du candidat. 6 AC = à classer, 4 = NC = non classé
+
 Etat civil
 =====
 g_cn_com_nai  commune de naissance
@@ -109,4 +111,3 @@ g_ea_cod            par établissement
 g_fr_cod            par filière
 g_tc_cod            par secteur
 i_lm_flg_sai_let_1  saisie lettre motivation
-
