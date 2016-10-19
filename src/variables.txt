@@ -109,4 +109,4 @@ g_ea_cod            par établissement
 g_fr_cod            par filière
 g_tc_cod            par secteur
 i_lm_flg_sai_let_1  saisie lettre motivation
-
+i_ep_cod            Etat de pointage des dossiers 
