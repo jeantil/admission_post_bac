@@ -83,7 +83,7 @@ WHERE
 ORDER BY 2, 3, 4, 5;
 		
 /* Explication détaillée :
-Il s'agit de construire un curseur sur un ensemble de candidats, inscriptions, rec ,, voeux. 
+Il s'agit de construire un curseur sur un ensemble de candidats, inscriptions, rec, voeux. 
 
 Explication préliminaire
 ------------------------
@@ -108,12 +108,14 @@ Les condition sont cumulatives :
 * i.i_is_val=1 : le commentaire indique non encore classé. Même table. Mais la valeur n'est pas mise à jour dans le code fourni.
 * pas un candidat déjà passé par la moulinette des lignes 269 et suivantes.
 
-Résumé : il faut cumuler une inscrption à la formation et au groupe paramètres de la fonction, ne pas être déjà passé à la moulinette, deux conditions de forme (g_ic_cod > 0 et i_is_val=1) et surtout un Bac EFE et être pointé-reçu.
+Résumé : il faut cumuler une inscription à la formation et au groupe paramètres de la fonction, ne pas être déjà passé à la moulinette, deux conditions de forme (g_ic_cod > 0 et i_is_val=1) et surtout un Bac EFE et être pointé-reçu.
 
 Le point surprenant est qu'on ne voit pas la mise à jour de i_is_val dans le code.
 
 Ordre de sélection des candidats
 --------------------------------
+ATTENTION, IL NE S'AGIT PAS DU RANG ATTRIBUE, MAIS D'UNE OPERATION PREALABLE.
+
 Ce sont les ordres de voeux, du plus petit au plus grand numéro d'ordre. Les voeux ayant un numéro 0 sont les derniers, ce qui tend à montrer que les numéros d'ordre sont négatifs (??). Le classement est fait en comparant les candidats un à un selon les règles suivantes :
 * le plus petit numéro d'ordre du voeu avec voeux groupés relatifs licence (0 si pas de voeu) est premier ;
 * si le numéro d'ordre du voeu avec voeux groupés relatifs licence est identique, le plus petit ordre du voeu avec voeux groupé relatif licence et tous les autres voeux (0 si pas de voeu) est premier ;
