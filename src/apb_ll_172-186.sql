@@ -24,5 +24,5 @@ l_six_voe vaut 1 si les conditions cumulatives sont satisfaites :
 * g_tri_ins.g_ti_flg_rec_idf est égale à 2,3,5,6 : d'après le commentaire, formation type idf.
 Sinon le paramètre est à 0.
 
-Ce paramètre joue un rôle important 
+Ce paramètre joue un rôle important dans le tri des non EFE, puisqu'il active un tri sur la mystérieuse fonction "six_voeu_L1" de la ligne 102
 */
