@@ -1,4 +1,4 @@
-/* Code fourni, lignes 98 à 142 */
+/* Code fourni, lignes 98 à 149 */
 CURSOR class_aleatoire_autres_cddts IS
 -- les candidats non classés par la requête ci-dessus : les autre bac que EEE
 
