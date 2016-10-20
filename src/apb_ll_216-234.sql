@@ -64,7 +64,7 @@ Le message ne semble pas recouvrir tous les cas qui mènent à un result set vid
 
 Si les conditions sont satisfaites, les variables l_g_tg_cod, l_c_gp_flg_sel, l_g_ea_cod_ges, l_c_ja_cod, l_c_tj_cod, l_g_flh_sel, l_c_gp_eta_cla se voient affecter les valeurs sélectionnées.
 
-A noter en particulier la valeur NVL(g_ti_flh_sel, g_fr_flg_sel) qui est affectée à l_g_flh_sel. Elle vaut g_tri_ins.g_ti_flh_sel, ou si cette valeur est nulle, g_for.g_fr_flg_sel (fonction NVL). Si cette valeur doit être à 0 pour que le code passe en prod. ??
+A noter en particulier la valeur NVL(g_ti_flh_sel, g_fr_flg_sel) qui est affectée à l_g_flh_sel. Elle vaut g_tri_ins.g_ti_flh_sel, ou si cette valeur est nulle, g_for.g_fr_flg_sel (fonction NVL). Si cette valeur doit être à 0 pour que le code passe en prod. Cela signifie peut-être que la formation n'est pas sélective (je manque d'infos métier à ce niveau).
 
 Résumé : si la formation et le groupe sont trouvés (à la fois dans les tables qui les contiennent et en tant que référence dans d'autres tables utiles), on continue le traitement.
 */
