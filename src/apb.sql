@@ -161,7 +161,7 @@ BEGIN
     IS_prod:=1;
     -- on ne laisse passer qu'en indic = 10
     IF NVL(indic, 0) NOT IN (10)
-      THEN mess_aff:='On ne peut forcer un classement sur la base d''exploitation.',
+      THEN mess_aff:='On ne peut forcer un classement sur la base d''exploitation.';
       ROLLBACK;
       RETURN 1;
   END IF;
@@ -203,7 +203,7 @@ BEGIN
   AND g.c_gp_cod=cg.c_gp_cod
   AND NVL(c_gp_flg_sel, 0) IN (1, 2)
   AND i_ip_cod NOT IN (4, 6);
-  mess_aff='Un classement a déjà été saisi pour le groupe de cette formation :'
+  mess_aff:='Un classement a déjà été saisi pour le groupe de cette formation :'
   ||o_g_ea_cod_ins||','||o_g_ti_cod||','|| o_c_gp_cod;
   ROLLBACK;
   RETURN 1;
@@ -228,7 +228,7 @@ BEGIN
   EXCEPTION
   WHEN NO_DATA_FOUND
     THEN mess_aff:='Erreur de traitement, la ligne groupe n''existe pas : c_gp_cod : '
-    || o_c_gp Cod;
+    || o_c_gp_cod;
     ROLLBACK;
     RETURN 1;
 END;
@@ -239,7 +239,7 @@ IF IS_prod=0 -- Base de test
   -- en prod pour les classements formation non sélectives ou les AEFE
   (IS_prod=1 AND indic=10 AND l_g_flh_sel=0)
   THEN NULL; -- on laisse passer. Dans tous les autre cas, c'est une erreur.
-ELSE mess_aff='On ne peut traiter ce type de classement aléatoire dans ces conditions :
+ELSE mess_aff:='On ne peut traiter ce type de classement aléatoire dans ces conditions :
   '||
   'ls_prod : ' || IS_prod || ', indic : ' || indic || 'Flag Sel : '|| l_c_gp_flg_sel;
   ROLLBACK;
