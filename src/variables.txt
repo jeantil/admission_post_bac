@@ -7,9 +7,19 @@ AEFE = étudiant du réseau de l'agence des étudiants français à l'étranger
 
 g_cn_cod      code du candidat inscription
 g_cn_cod_frm  code du candidat inscription
-g_ti_cod      code confidentiel inscription
+g_ti_cod      code formation inscription
 
 i_ip_cod        Etat (des voeux?) du candidat. 6 AC = à classer, 4 = NC = non classé
+i_ep_cod        Etat de pointage des dossiers 
+                -1 : Non demandé
+                0 : Dossier non parvenu
+                1 : Inscrit
+                2 : Dossier reçu
+                3 : Dossier incomplet
+                4 : Non classé
+                5 : Classé
+                6 : A classer
+                7 : Reçu hors délais                
 
 Etat civil
 =====
