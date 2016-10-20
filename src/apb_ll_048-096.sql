@@ -116,7 +116,7 @@ Ordre de sélection des candidats
 --------------------------------
 ATTENTION, IL NE S'AGIT PAS DU RANG ATTRIBUE, MAIS D'UNE OPERATION PREALABLE.
 
-Ce sont les ordres de voeux, du plus petit au plus grand numéro d'ordre. Les voeux ayant un numéro 0 sont les derniers, ce qui tend à montrer que les numéros d'ordre sont négatifs (??). Le classement est fait en comparant les candidats un à un selon les règles suivantes :
+Ce sont les ordres de voeux, du plus petit au plus grand numéro d'ordre. Les voeux ayant un numéro 0 sont les derniers, ce qui tend à montrer que les numéros d'ordre sont négatifs (??). Le tri est fait en comparant les candidats un à un selon les règles suivantes :
 * le plus petit numéro d'ordre du voeu avec voeux groupés relatifs licence (0 si pas de voeu) est premier ;
 * si le numéro d'ordre du voeu avec voeux groupés relatifs licence est identique, le plus petit ordre du voeu avec voeux groupé relatif licence et tous les autres voeux (0 si pas de voeu) est premier ;
 * si le numéro d'ordre du voeu avec voeux groupé relatif licence et tous les autres voeux est identique, le plus petit ordre du sous-voeu dans le voeu groupé (0 si pas de voeu) ;

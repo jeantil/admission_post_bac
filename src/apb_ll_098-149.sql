@@ -110,9 +110,11 @@ Ordre de sélection des candidats
 --------------------------------
 ATTENTION, IL NE S'AGIT PAS DU RANG ATTRIBUE, MAIS D'UNE OPERATION PREALABLE.
 
-Il y a une différence importante avec les EFE : on fait passer les candidats pour lesquels l_six_voe (voir lignes 172 à 186) vaut 1 avant ceux pour lesquels l_six_voe vaut 0. Ensuite, le classement suit les mêmes règles qu'auparavant :
-Ce sont les ordres de voeux, du plus petit au plus grand numéro d'ordre. Les voeux ayant un numéro 0 sont les derniers, ce qui tend à montrer que les numéros d'ordre sont négatifs (??). Le classement est fait en comparant les candidats un à un selon les règles suivantes :
+Il y a une différence importante avec les EFE : le groupe et la formation ont déterminé une valeur de l_six_voe (voir lignes 172 à 186). Si cette valeur vaut 1, on prend en compte une mystérieuse fonction six_voeu_L1(c.g_cn_cod, g_aa_cod_bac_int, g_cn_flg_int_aca, o_g_tg_cod) avant d'appliquer les mêmes règles que pour le EFE. Si cette valeur vaut 0, le tri suit les mêmes règles qu'auparavant :
+Ce sont les ordres de voeux, du plus petit au plus grand numéro d'ordre. Les voeux ayant un numéro 0 sont les derniers, ce qui tend à montrer que les numéros d'ordre sont négatifs (??). Le tri est fait en comparant les candidats un à un selon les règles suivantes :
 * le plus petit numéro d'ordre du voeu avec voeux groupés relatifs licence (0 si pas de voeu) est premier ;
 * si le numéro d'ordre du voeu avec voeux groupés relatifs licence est identique, le plus petit ordre du voeu avec voeux groupé relatif licence et tous les autres voeux (0 si pas de voeu) est premier ;
 * si le numéro d'ordre du voeu avec voeux groupé relatif licence et tous les autres voeux est identique, le plus petit ordre du sous-voeu dans le voeu groupé (0 si pas de voeu) ;
 * si le numéro d'ordre du sous-voeu dans le voeu groupé est identique, un tirage au sort départage les candidats.
+
+Résumé : il y des formations et groupes pour lesquelles le tri est réalisé prioritairement sur la base d'une fonction absente du code fourni. Si la formation ne fait pas partie de cette catégorie, ou si les valeurs de cette fonction sont les mêmes pour deux candidats, ils seront triés par ordre de voeux comme les EFE.
