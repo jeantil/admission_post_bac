@@ -82,7 +82,8 @@ WHERE
 	) -- Permet de récupérer les AC
 ORDER BY 2, 3, 4, 5;
 		
-/* Explication détaillée :
+/* 
+Explication détaillée :
 Il s'agit de construire un curseur sur un ensemble de candidats, inscriptions, rec, voeux. 
 
 Explication préliminaire
@@ -94,8 +95,8 @@ WHERE i.g_cn_cod=g_cn_cod -- i est la table des inscrits,
 AND i.g_gf_cod=c_gp_cod
 AND i_ip_cod IN (4, 5))
 
-La table "c_can_grp" contient tous les candidats déjà passés par les étapes suivantes, avec des c_can_grp.i_ip_cod valant 4 ou 5 pour chacun d'eux (voir lignes 269 et suivantes).
-Le code suivant exclut donc les candidats déjà passés par la moulinette des lignes 269 et suivantes.
+La table "c_can_grp" contient les liens entre les candidats et les groupes. Si elle contient une correspondance entre notre groupe et un candidat, c'est que ce candidat est déjà passé par les étapes suivantes, avec des c_can_grp.i_ip_cod valant 4 ou 5 pour chacun des candidats (voir lignes 269 et suivantes).
+Le code précédent exclut donc les candidats déjà passés par la moulinette des lignes 269 et suivantes.
 
 Critères de sélection des candidats
 -----------------------------------
