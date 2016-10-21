@@ -47,8 +47,8 @@ END;
 /*
 Explication détaillée :
 Ce bloc de code rompt le traitement dans les cas suivants, en se fondant sur les tables c_grp (les groupes) et c_can_grp (lien n-n entre les candidats et les groupes). Si l'une des conditions suivantes est satisfaite, on arrête :
-* le groupe est non sélectif (c_gp_flg_sel = 0), et son code apparait dans les liens avec les candidats. Cela signifie que le groupe a déjà été traité.
-* le groupe est sélectif (c_gp_flg_sel = 1 ou 2), et on trouve au moins un candidat qui n'est pas NC ou AC (donc i_ip_cod = 5 ?). Cela signifie que le groupe a déjà été traité.
+* le groupe o_c_gp_cod (paramètre de la fonction) est non sélectif (c_gp_flg_sel = 0), AU MOINS UN candidat et son code apparait dans les liens groupes-candidats. Cela signifie que le groupe a déjà été traité.
+* le groupe est sélectif (c_gp_flg_sel = 1 ou 2), et on trouve AU MOINS UN candidat qui n'est pas NC ou AC (donc i_ip_cod = 5, classé). Cela signifie que le groupe a déjà été traité.
 
 Deux remarques :
 1. Cela parait un peu tard dans le script pour se poser la question, mais pourquoi pas ?

@@ -66,7 +66,7 @@ SELECT c.g_cn_cod,
 FROM g_can c 
 INNER JOIN i_ins i ON i.g_cn_cod=c.g_cn_cod
 INNER JOIN a_rec r ON i.g_ti_cod=r.g_ti_cod
-LEFT JOIN ON a_voe v ON c.g_cn_cod=v.g_cn_cod AND r.g_ta_cod=v.g_ta_cod -- que se passe-t-il si l'un des deux est vrai (cela vaut pour le code initial également) ?
+LEFT JOIN ON a_voe v ON c.g_cn_cod=v.g_cn_cod AND r.g_ta_cod=v.g_ta_cod
 WHERE 
 	i.g_ti_cod=o_g_ti_cod
 	AND i.g_gf_cod=o_c_gp_cod
@@ -84,23 +84,32 @@ ORDER BY 2, 3, 4, 5;
 		
 /* 
 Explication détaillée :
-Il s'agit de construire un curseur sur un ensemble de candidats, inscriptions, rec, voeux. 
+Il s'agit de construire un curseur sur un ensemble de candidats (g_can), inscriptions (i_ins ?), formations, établissements (a_rec ?), voeux (a_voe) reliés entre eux.
+IL FAUT PRÊTER ATTENTION AU FAIT QUE LES CANDIDATS SONT FILTRÉS À CE NIVEAU POUR DÉTERMINER CEUX POUR LESQUELS LE TRAITEMENT SUIVANT (ATTRIBUTION D'UN RANG) AURA LIEU.
 
 Explication préliminaire
 ------------------------
-Le code suivant est utilisé 4 fois (2 fois ici et 2 fois plus loin) :
+Le code suivant est utilisé 4 fois (2 fois ici et 2 fois plus loin). C'EST UN FILTRE SUR LES CANDIDATS POUR LESQUELS LE TRAITEMENT AURA LIEU :
 
 NOT EXISTS (SELECT 1 FROM c_can_grp
-WHERE i.g_cn_cod=g_cn_cod -- i est la table des inscrits, 
+WHERE i.g_cn_cod=g_cn_cod, -- 
 AND i.g_gf_cod=c_gp_cod
 AND i_ip_cod IN (4, 5))
 
-La table "c_can_grp" contient les liens entre les candidats et les groupes. Si elle contient une correspondance entre notre groupe et un candidat, c'est que ce candidat est déjà passé par les étapes suivantes, avec des c_can_grp.i_ip_cod valant 4 ou 5 pour chacun des candidats (voir lignes 269 et suivantes).
-Le code précédent exclut donc les candidats déjà passés par la moulinette des lignes 269 et suivantes.
+La table "c_can_grp" contient la relation entre les candidats et les groupes. Si elle contient une correspondance entre notre groupe et un candidat avec un c_can_grp.i_ip_cod  valant 4 (NC = non classé) ou 5 (C = classé), c'est que ce candidat est déjà passé par les étapes suivantes (voir lignes 269 et suivantes). Un candidat pour lequel il existe une correspondance candidat-groupe mais pour lequel i_ip_cod vaut 6 (AC = à classer) est conservé.
 
-Critères de sélection des candidats
------------------------------------
-Les codes i_ins.g_ti_cod et i_ins.g_gf_cod correspondent aux paramètres o_g_ti_cod (formation ?) et o_c_gp_cod (groupe ?) de l'appel de la fonction. On retient (et ne retient que) les inscriptions dont le groupe et la formation correspondent. Le lien avec le candidat se fait sur le g_cn_cod.
+>> Le code précédent exclut donc les candidats déjà passés par la moulinette des lignes 269 et suivantes, sauf s'ils sont à classer.
+
+La relation entre candidats, inscriptions, reçus, voeux
+-------------------------------------------------------
+On cherche, pour chaque candidat, une inscription (i.g_cn_cod=c.g_cn_cod) à une formation qui correspond à une ligne de la table a_rec (établissement ??) (i.g_ti_cod=r.g_ti_cod), puis on cherche d'éventuels voeux de ce candidat (c.g_cn_cod=v.g_cn_cod).
+
+Critères pour le filtre sur les candidats pour lesquels le traitement aura lieu
+--------------------------------------------------------------------------------------
+Les codes i_ins.g_ti_cod et i_ins.g_gf_cod correspondent aux paramètres o_g_ti_cod (formation visée) et o_c_gp_cod (groupe des candidats) de l'appel de la fonction. 
+En plus des condtions précédentes, il faut qu'on trouve une inscription de ce candidat, à la formation (DETAILLER).
+
+On retient (et ne retient que) les inscriptions dont le groupe et la formation correspondent. Le lien avec le candidat se fait sur le g_cn_cod.
 
 Les condition sont cumulatives :
 * g_can.g_ic_cod > 0 : ?? ;

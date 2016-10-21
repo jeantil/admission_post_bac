@@ -33,10 +33,10 @@ END LOOP;
 
 /*
 Explication détaillée :
-Enfin on passe aux EFE, dans l'ordre des voeux croissants (cf. ligne 96). La variable i, qui sert à l'affection, a été mise à 1 à la ligne 266.
+Enfin on passe aux EFE, dans l'ordre des voeux croissants (cf. ligne 96). La variable i, qui sert à FIXER LE RANG de 1 à N, a été mise à 1 à la ligne 266.
 On parcourt les candidats EFE, et on réalise les opérations suivates :
-* si le lien entre le candidat et le groupe n'a pas été fait, on le fait en donnant le cn_cod (code d'inscription du candidat) et gp_cod (code du groupe, paramètre de la fonction), puis un i_ip_cod toujours à 5 et enfin le c_cg_ran (le rang) courant i.
-* si le lien a déjà été fait, et que le i_ip_cod est à 6 (candidat à classer), on met à jour ce lien avec le i_ip_cod à 5 et le rang courant. Ce qui signifie que le candidat a un rang plus élevé.
+* si le lien entre le candidat et le groupe n'a pas été fait, on le fait en donnant le cn_cod (code d'inscription du candidat) et gp_cod (code du groupe, paramètre de la fonction), puis un i_ip_cod toujours à 5 (classé) et enfin le c_cg_ran (le rang) courant i.
+* si le lien a déjà été fait, et que le i_ip_cod est à 6 (candidat à classer), on met à jour ce lien avec le i_ip_cod à 5 et le rang courant. On peut supposer que le rang était nul avant.
 * si le lien a dajà été fait, mais qu'on a un i_ip_cod différent de 6 (par ex. 5 si on avait un doublon dans le SELECT du curseur), on arrêté le traitement et ROLLBACK.
 Après chaque candidat, le rang courant est incrémenté.
 

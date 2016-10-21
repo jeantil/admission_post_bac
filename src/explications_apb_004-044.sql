@@ -55,13 +55,13 @@ Certains paramètres d'entrée sont utilisés que pour la construction de la val
 * login, type_login, mode_dev et confirm, saio, nip apparaissent aux lignes 346 et suivantes, puis 361 et suivantes et 375 et suivantes, au niveau d'une validation (MAJ_etat_classement, valid_classement_def, valid_classement_formation).
 * indic est nécessaire pour déterminer si le traitement va avoir lieu. Intervient également dans les valeurs de retour
 * le reste :
-** o_g_ti_cod : code de la formation, o_c_gp_cod code du groupe,
-** o_g_tg_cod intervient pour déterminer si on utilisera la fonction six_voeu_L1, o_g_tg_cod IN (21, 25, 26, 41, 45, 46) doit signifier, d'après les commentaires, que le groupe  concerné par des néo d'IDF.
+** o_g_ti_cod : code de la formation visée par les candidats, o_c_gp_cod code du groupe des candidats,
+** o_g_tg_cod intervient pour déterminer si on utilisera la fonction six_voeu_L1, "o_g_tg_cod IN (21, 25, 26, 41, 45, 46)" doit signifier, d'après les commentaires, que le groupe  concerné par des néo d'Île de France.
 
 Les variables locales
 *********************
 * retour : la valeur de retour
-* X : l'étape courante, utilisé en cas de rupture du traitement
+* X : l'étape courante, utilisé pour les messages en cas de rupture du traitement
 * dummy et dummy2, pour tester si une requête sur la base renvoie un résultat vide.
 * les variables suivantes sont utilisées dans des SELECT INTO, afin de stocker le résultat d'une requête.
 * i : le rang courant, au cours de l'affectation d'un rang à chaque candidat
@@ -71,6 +71,11 @@ Les variables locales
 La constante
 ************
 UNIQUE_CONSTRAINT sert à intercepter les violations de la contrainte d'unicité d'un enregistrement, c'est-à-dire lorsqu'on cherche à insérer dans une table un enregistrement qui à le même identifiant (PK). Le traitement utilise cette technique au moment de l'insertion dans la table c_can_grp, qui contient le classement de chaque candidat. Si une insertion aa déjà été faite auparavant, le traitement le détecte et s'adapte.
+
+En résumé, trois paramètres interviennent de manière essentielle au niveau du traitement réalisé dans la fonction principale : 
+* o_g_ti_cod : code de la formation visée par les candidats ;
+* o_c_gp_cod : code du groupe des candidats ;
+* o_g_tg_cod : une information sur le groupe des candidats.
+
+Cette fonction attribue un rang pour un groupe de candidats et une formation visée.
 */
-
-

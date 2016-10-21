@@ -20,11 +20,12 @@ END gen_class_alea_V1_relatif_grp;
 
 /*
 Explication détaillée :
-Mise à jour de la table des groupes. Pour le groupe passé en paramètre, et si c_gp_eta_cla vaut 2, la mise à jour suivante est réalisée :
+Mise à jour de la table des groupes. Pour le groupe passé en paramètre, et si c_gp_eta_cla (état du classement du groupe) vaut 2, la mise à jour suivante est réalisée :
 * c_gp_flg_cla_oto est mis à 1 ;
 * si l_c_gp_eta_cla (cf. ligne 221) est à 3, c_gp_eta_cla passe à 4 (quelle est la différence entre les deux ?). Sinon il n'est pas modifié.
 
-Cela signifier que c_gp_eta_cla a pu être modifié, probablement par une des fonctions en 11, 12 ou 13. 
+Cela signifie que c_gp_eta_cla a pu être modifié, probablement par une des fonctions en 11, 12 ou 13. 
 S'il est passé de 3 (l_c_gp_eta_cla fixé à la ligne 221 d'après c_gp_eta_cla) à 2 (condition actuelle), alors on le met à 4 (??). S'il n'était pas à 3, il n'est pas modifié.
 
-Le message d'erreur porte apparement sur l'ensemble du processus, avec un message d'erreur qui rappelle X, soit l'étape courante. En cas d'erreur, annulation (ROLLBACK) et retour de la valeur -9 */
+Le message d'erreur porte apparement sur l'ensemble du processus, avec un message d'erreur qui rappelle X, soit l'étape courante. En cas d'erreur, annulation (ROLLBACK) et retour de la valeur -9 
+*/

@@ -86,6 +86,7 @@ CURSOR class_aleatoire_autres_cddts IS
 		
 /* Explication détaillée :
 Il s'agit de construire un curseur sur un ensemble de candidats, inscriptions, rec, voeux. 
+RAPPEL : IL FAUT PRÊTER ATTENTION AU FAIT QUE LES CANDIDATS SONT FILTRÉS À CE NIVEAU POUR DÉTERMINER CEUX POUR LESQUELS LE TRAITEMENT SUIVANT (ATTRIBUTION D'UN RANG) AURA LIEU.
 
 Voir l'explication préliminaire sur apb_ll48-96.sql
 
@@ -108,8 +109,6 @@ Même point surprenant que précédemment : on ne voit pas la mise à jour de i_
 
 Ordre de sélection des candidats
 --------------------------------
-ATTENTION, IL NE S'AGIT PAS DU RANG ATTRIBUE, MAIS D'UNE OPERATION PREALABLE.
-
 Il y a une différence importante avec les EFE : le groupe et la formation ont déterminé une valeur de l_six_voe (voir lignes 172 à 186). Si cette valeur vaut 1, on prend en compte une mystérieuse fonction six_voeu_L1(c.g_cn_cod, g_aa_cod_bac_int, g_cn_flg_int_aca, o_g_tg_cod) avant d'appliquer les mêmes règles que pour le EFE. Si cette valeur vaut 0, le tri suit les mêmes règles qu'auparavant :
 Ce sont les ordres de voeux, du plus petit au plus grand numéro d'ordre. Les voeux ayant un numéro 0 sont les derniers, ce qui tend à montrer que les numéros d'ordre sont négatifs (??). Le tri est fait en comparant les candidats un à un selon les règles suivantes :
 * le plus petit numéro d'ordre du voeu avec voeux groupés relatifs licence (0 si pas de voeu) est premier ;

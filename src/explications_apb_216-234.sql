@@ -57,8 +57,7 @@ END;
 /*
 Explication détaillée :
 A nouveau un cas de rupture du traitement, si on ne parvient pas à joindre les tables utilisées et à tester la présence de la formation et du groupe. Informellement, les conditions suivantes doivent être cumulées : 
-* on trouve la formation et le groupe paramètres de la fonction dans la table des groupes et celles des formations ;
-* le groupe et la formation possèdent une juridiction administrative identique ;
+* le groupe et la formation passés en paramètres possèdent une juridiction administrative identique ;
 * ti.g_fr_cod_ins=fr.g_fr_cod : ???
 Le message ne semble pas recouvrir tous les cas qui mènent à un result set vide.
 
