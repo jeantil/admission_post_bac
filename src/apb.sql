@@ -331,7 +331,7 @@ ELSE
           mess_err:='pk_generation_classement.gen_class_alea_V1_relatif_grp X: ('||X||')'
           ||'Erreur traitement d''un candidat AC pour l''étab'
           || o_g_ea_cod_ins||' et la formation
-          '|| o_g_ti_cod||': ' ||o_C_gp_cod||', le candidat ' || c_rec.g_Cn_Cod
+          '|| o_g_ti_cod||': ' ||o_c_gp_cod||', le candidat ' || c_rec.g_cn_cod
           ||'et le groupe : '||o_c_gp_cod||', rg:'||i;
           ROLLBACK;
           RETURN -1;
