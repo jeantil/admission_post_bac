@@ -326,7 +326,7 @@ ELSE
         WHERE g_cn_cod=c_rec.g_cn_cod
         AND c_gp_cod=o_c_gp_cod
         AND i_ip_cod=6;
-        IF SOL%ROWCOUNT!=1
+        IF SQL%ROWCOUNT!=1
           THEN
           mess_err:='pk_generation_classement.gen_class_alea_V1_relatif_grp X: ('||X||')'
           ||'Erreur traitement d''un candidat AC pour l''étab'
