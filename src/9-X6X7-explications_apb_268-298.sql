@@ -1,5 +1,5 @@
 /* Code fourni, lignes 268 à 298 */
-X:='61';
+X:='6';
 FOR c_rec IN classement_aleatoire_efe
   LOOP BEGIN
     INSERT INTO c_can_grp(
