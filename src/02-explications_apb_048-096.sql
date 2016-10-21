@@ -57,29 +57,25 @@ Il paraît plus simple de faire un LEFT JOIN sur la table a_voe, et de mettre ce
 -- classement aléatoire sur voeu 1 groupé relatif
 CURSOR classement_aleatoire_efe IS
 -- on traite d'abord les candidats AEFE s'il y en a
-SELECT c.g_cn_cod,
-	(CASE WHEN v.g_cn_cod IS NULL THEN 0 ELSE a_ve_ord_vg_rel END), -- Ordre du voeu avec voeux groupés relatifs licence, 0 si pas de voeu
-	(CASE WHEN v.g_cn_cod IS NULL THEN 0 ELSE a_ve_ord_aff END), -- Ordre du voeu avec voeux groupé relatif licence et tous les autres voeux, 0 si pas de voeu
-	(CASE WHEN v.g_cn_cod IS NULL THEN 0 ELSE a_vg_ord END), -- Ordre du sous-voeu dans le voeu groupé, 0 si pas de voeu
+SELECT candidat.g_cn_cod,
+	IFNULL(v.g_cn_cod,0,a_ve_ord_vg_rel), -- Ordre du voeu avec voeux groupés relatifs licence, 0 si pas de voeu
+	IFNULL(v.g_cn_cod,0,a_ve_ord_aff), -- Ordre du voeu avec voeux groupé relatif licence et tous les autres voeux, 0 si pas de voeu
+	IFNULL(v.g_cn_cod,0,a_vg_ord), -- Ordre du sous-voeu dans le voeu groupé, 0 si pas de voeu
 	DBMS_RANDOM.value(1,999999),
 	i.i_ep_cod
-FROM g_can c 
-INNER JOIN i_ins i ON i.g_cn_cod=c.g_cn_cod
+FROM g_can candidat 
+INNER JOIN i_ins i ON i.g_cn_cod=candidat.g_cn_cod
 INNER JOIN a_rec r ON i.g_ti_cod=r.g_ti_cod
-LEFT JOIN ON a_voe v ON c.g_cn_cod=v.g_cn_cod AND r.g_ta_cod=v.g_ta_cod
+LEFT JOIN a_voe a ON candidat.g_cn_cod=v.g_cn_cod AND r.g_ta_cod=v.g_ta_cod
+LEFT JOIN c_can_grp g ON i.g_cn_cod = g.g_cn_cod AND i.g_gf_cod=g.c_gp_cod AND g.i_ip_cod IN (4, 5)
 WHERE 
 	i.g_ti_cod=o_g_ti_cod
 	AND i.g_gf_cod=o_c_gp_cod
-	AND c.g_ic_cod > 0
+	AND candidat.g_ic_cod > 0
 	AND NVL(g_cn_flg_aefe, 0)=1 -- Bac EFE
 	AND i_ep_cod IN (2, 3) -- Pointés recu (complet ou incomplet)
 	AND i.i_is_val=1 -- non encore classé
-	AND NOT EXISTS (
-		SELECT 1 FROM c_can_grp
-		WHERE i.g_cn_cod=g_cn_cod
-		AND i.g_gf_cod=c_gp_cod
-		AND i_ip_cod IN (4, 5)
-	) -- Permet de récupérer les AC
+	AND g.i_ip_cod IS NULL  -- Permet de récupérer les AC
 ORDER BY 2, 3, 4, 5;
 		
 /* 
@@ -96,7 +92,8 @@ WHERE i.g_cn_cod=g_cn_cod, --
 AND i.g_gf_cod=c_gp_cod
 AND i_ip_cod IN (4, 5))
 
-La table "c_can_grp" contient la relation entre les candidats et les groupes. Si elle contient une correspondance entre notre groupe et un candidat avec un c_can_grp.i_ip_cod  valant 4 (NC = non classé) ou 5 (C = classé), c'est que ce candidat est déjà passé par les étapes suivantes (voir lignes 269 et suivantes). Un candidat pour lequel il existe une correspondance candidat-groupe mais pour lequel i_ip_cod vaut 6 (AC = à classer) est conservé.
+La table "c_can_grp" contient la relation entre les candidats et les groupes. Si elle contient une correspondance entre notre groupe et un candidat avec un c_can_grp.i_ip_cod  valant 4 (NC = non classé) ou 5 (C = classé), 
+c'est que ce candidat est déjà passé par les étapes suivantes (voir lignes 269 et suivantes). Un candidat pour lequel il existe une correspondance candidat-groupe mais pour lequel i_ip_cod vaut 6 (AC = à classer) est conservé.
 
 >> Le code précédent exclut donc les candidats déjà passés par la moulinette des lignes 269 et suivantes, sauf s'ils sont à classer.
 
