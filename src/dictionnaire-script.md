@@ -123,7 +123,6 @@ g_ti_flh_sel | g_tri_ins | formation sélective || Etablissement
 g_tri_ins | table | || Etablissement
 gen_class_alea_V1_relatif_grp | fonction principale
 gp | alias pour la table c_grp
-gp_eta_cla | possède le préfixe c, ligne 218
 i | variable locale, compteur pour le rang
 i_ep_cod | i_ins ||| Voeux
 i_ins | table ||| Voeux
