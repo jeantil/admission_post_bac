@@ -172,7 +172,7 @@ mess_aff:= 'Problème d''accès aux données, veuillez vous reconnecter ultérie
 -- On vérifie si le groupe est issu d''une formation de type IDF 2, 3, 5 ou 6 et s'il concerné par des néo d'IDF
 -- alors, on utilisera les six voeux dans le classement sur ordre des voeux
 BEGIN
-  Х:='02';
+  X:='02';
   SELECT 1
   INTO l_six_voe
   FROM g_tri_ins ti
@@ -286,7 +286,7 @@ FOR c_rec IN classement_aleatoire_efe
     AND i_ip_cod=6;
     IF SQL%ROWCOUNT!=1
       THEN mess_err:='pk_generation_classement.gen_class_alea_V1_relatif_grp
-      X : (' || Х || ')'
+      X : (' || X || ')'
       ||'Erreur traitement d''un candidat AC pour l''étab'
       || o_g_ea_cod_ins ||' et la formation '|| o_g_ti_cod||':'|| o_c_gp_cod ||', le candidat'||c_rec.g_cn_cod
       ||' et le groupe : '||o_c_gp_cod||', rg :'||i;
@@ -313,7 +313,7 @@ FOR c_rec IN class_aleatoire_autres_cddts
   END;
 ELSE
   BEGIN
-    Х:='09';
+    X:='09';
     INSERT INTO c_can_grp (g_cn_cod, c_gp_cod,
       i_ip_cod, c_cg_ran)
     VALUES (c_rec.g_cn_cod, o_c_gp_cod,5, i);
@@ -342,7 +342,7 @@ END IF;
 END LOOP;
 
 -- le classement est marqué terminé
-Х:='11';
+X:='11';
 retour:=pk_new_classement_commun.MAJ_etat_classement(
   l_g_ea_cod_ges, o_g_ea_cod_ins, o_g_ti_cod,
   l_c_ja_cod, l_c_tj_cod, o_c_gp_cod,
