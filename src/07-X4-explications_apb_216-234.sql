@@ -4,7 +4,7 @@ BEGIN
   X:='04';
   SELECT g_tg_cod, c_gp_flg_sel,
   g_ea_cod_ges, ja.c_ja_cod, c_tj_cod,
-  NVL(g_ti_flh_sel, g_fr_flg_sel), c.gp_eta_cla
+  NVL(g_ti_flh_sel, g_fr_flg_sel), c_gp_eta_cla
   INTO l_g_tg_cod, l_c_gp_flg_sel,
   l_g_ea_cod_ges, l_c_ja_cod, l_c_tj_cod,
   l_g_flh_sel, l_c_gp_eta_cla
@@ -31,7 +31,7 @@ BEGIN
 	g_tg_cod, c_gp_flg_sel, 
 	g_ea_cod_ges, ja.c_ja_cod, 
 	c_tj_cod, NVL(g_ti_flh_sel, g_fr_flg_sel), 
-	c.gp_eta_cla
+	c_gp_eta_cla
   INTO 
 	l_g_tg_cod, l_c_gp_flg_sel,
 	l_g_ea_cod_ges, l_c_ja_cod, 
