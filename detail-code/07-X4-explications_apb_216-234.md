@@ -1,4 +1,5 @@
-/* Code fourni, lignes 216 à 234 */
+# Code fourni, lignes 216 à 234
+```
 -- c'est ok, on va générer. On commence par récupérer des infos en base
 BEGIN
   X:='04';
@@ -21,10 +22,11 @@ BEGIN
     ROLLBACK;
     RETURN 1;
 END;
+```
 
-/* Code mis en forme :
-Avec jointure */
--- DO NOT USE !!!
+# Code mis en forme
+Avec jointure
+```
 BEGIN
   X:='04';
   SELECT 
@@ -53,17 +55,17 @@ BEGIN
     ROLLBACK;
     RETURN 1;
 END;
+```
 
-/*
-Explication détaillée :
+# Explication détaillée
 A nouveau un cas de rupture du traitement, si on ne parvient pas à joindre les tables utilisées et à tester la présence de la formation et du groupe. Informellement, les conditions suivantes doivent être cumulées : 
 * le groupe et la formation passés en paramètres possèdent une juridiction administrative identique ;
-* ti.g_fr_cod_ins=fr.g_fr_cod : ???
+* `ti.g_fr_cod_ins=fr.g_fr_cod` : ???
 Le message ne semble pas recouvrir tous les cas qui mènent à un result set vide.
 
-Si les conditions sont satisfaites, les variables l_g_tg_cod, l_c_gp_flg_sel, l_g_ea_cod_ges, l_c_ja_cod, l_c_tj_cod, l_g_flh_sel, l_c_gp_eta_cla se voient affecter les valeurs sélectionnées.
+Si les conditions sont satisfaites, les variables `l_g_tg_cod`, `l_c_gp_flg_sel`, `l_g_ea_cod_ges`, `l_c_ja_cod`, `l_c_tj_cod`, `l_g_flh_sel`, `l_c_gp_eta_cla` se voient affecter les valeurs sélectionnées.
 
-A noter en particulier la valeur NVL(g_ti_flh_sel, g_fr_flg_sel) qui est affectée à l_g_flh_sel. Elle vaut g_tri_ins.g_ti_flh_sel, ou si cette valeur est nulle, g_for.g_fr_flg_sel (fonction NVL). Si cette valeur doit être à 0 pour que le code passe en prod. Cela signifie peut-être que la formation n'est pas sélective (je manque d'infos métier à ce niveau).
+A noter en particulier la valeur `NVL(g_ti_flh_sel, g_fr_flg_sel)` qui est affectée à `l_g_flh_sel`. Elle vaut `g_tri_ins.g_ti_flh_sel`, ou si cette valeur est nulle, `g_for.g_fr_flg_sel` (fonction `NVL`). Si cette valeur doit être à 0 pour que le code passe en prod. Cela signifie peut-être que la formation n'est pas sélective (je manque d'infos métier à ce niveau).
 
-Résumé : si la formation et le groupe sont trouvés (à la fois dans les tables qui les contiennent et en tant que référence dans d'autres tables utiles), on continue le traitement.
-*/
+# Résumé
+Si la formation et le groupe sont trouvés (à la fois dans les tables qui les contiennent et en tant que référence dans d'autres tables utiles), on continue le traitement.

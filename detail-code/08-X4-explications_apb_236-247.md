@@ -1,4 +1,5 @@
-/* Code fourni, lignes 236 à 247 */
+# Code fourni, lignes 236 à 247
+```
 -- on vérifie les Conditions de traitement du groupe
 IF IS_prod=0 -- Base de test
   OR -- Ou
@@ -11,11 +12,11 @@ ELSE mess_aff:='On ne peut traiter ce type de classement aléatoire dans ces con
   ROLLBACK;
   RETURN 1;
 END IF;
+```
 
-/*
-Explication détaillée :
+# Explication détaillée
 Les principales parties de ce bloc ont déjà été vues.
-On rompt le traitement si on est en prod (IS_prod = 1 et, par définition, ligne 163, indic=10) et que l_g_flh_sel est null ou différent de 0. Pour mémoire, l_g_flh_sel vaut à ce point NVL(g_ti_flh_sel, g_fr_flg_sel), ce qui signifie peut-être que la formation n'est pas sélective (je manque d'infos métier à ce niveau).
 
-Mais le message d'erreur concerne une autre variable, l_c_gp_flg_sel, qui a été initialisée dans le bloc précédent et qui marque un groupe sélectif.
-*/
+On rompt le traitement si on est en prod (`IS_prod = 1` et, par définition, ligne 163, `indic=10`) et que `l_g_flh_sel` est null ou différent de 0. Pour mémoire, `l_g_flh_sel` vaut à ce point `NVL(g_ti_flh_sel, g_fr_flg_sel)`, ce qui signifie peut-être que la formation n'est pas sélective (je manque d'infos métier à ce niveau).
+
+Mais le message d'erreur concerne une autre variable, `l_c_gp_flg_sel`, qui a été initialisée dans le bloc précédent et qui marque un groupe sélectif.
