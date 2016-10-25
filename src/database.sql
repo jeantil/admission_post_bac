@@ -6,7 +6,7 @@ CREATE TABLE c_grp
 (	
 	c_gp_cod			NUMBER(8) PRIMARY KEY, -- c_can_grp.c_gp_cod est probablement une FK pointant vers cette PK
 	g_tg_cod			NUMBER(8), -- pas d'info extérieure, mais tous les codes sont des NUMBER(8), FK ?
-	c_ja_cod			NUMBER(8) FOREIGN KEY REFERENCES(c_jur_adm.c_ja_cod), -- pas d'info extérieure, mais tous les codes sont des NUMBER(8), FK ?
+	c_ja_cod			NUMBER(8) FOREIGN KEY REFERENCES c_jur_adm(c_ja_cod), -- pas d'info extérieure, mais tous les codes sont des NUMBER(8), FK ?
 	c_gp_eta_cla		NUMBER(3), -- pas d'info extérieure, un entier d'état, NUMBER(3) par prudence
 	c_gp_flg_sel		NUMBER(1), -- pas d'info extérieure, mais un flg (flag)
 	c_gp_flg_cla_oto 	NUMBER(1), -- pas d'info extérieure, mais un flg (flag)
@@ -41,7 +41,7 @@ CREATE TABLE c_jur_adm
 (	
 	c_ja_cod	NUMBER(8) PRIMARY KEY, -- pas d'info, mais semble la PK
 	c_tj_cod	NUMBER(8), -- pas d'info
-	g_ti_cod	NUMBER(8) FOREIGN KEY REFERENCES(g_tri_ins.g_ti_cod) -- FK ?
+	g_ti_cod	NUMBER(8) FOREIGN KEY REFERENCES g_tri_ins (g_ti_cod) -- FK ?
 );
 
 DROP TABLE g_can;
@@ -57,7 +57,7 @@ CREATE TABLE g_can -- document Candidats.pdf
 DROP TABLE i_ins;
 CREATE TABLE i_ins -- document Voeux.pdf
 (	
-	g_cn_cod	NUMBER(8) PRIMARY KEY REFERENCES g_can(g_cn_cod),
+	g_cn_cod	NUMBER(8) FOREIGN KEY REFERENCES g_can(g_cn_cod),
 	g_ti_cod	NUMBER(8) PRIMARY KEY,
 	g_gf_cod	NUMBER(6),
 	i_ep_cod	NUMBER(3),
@@ -68,8 +68,8 @@ CREATE TABLE i_ins -- document Voeux.pdf
 DROP TABLE a_rec;
 CREATE TABLE a_rec -- document Etablissements.pdf
 (	
-	g_ti_cod	NUMBER(8) PRIMARY KEY REFERENCES g_tri_ins(g_ti_cod),
-	g_ta_cod	NUMBER(8) PRIMARY KEY REFERENCES g_tri_aff(g_ta_cod)
+	g_ti_cod	NUMBER(8) FOREIGN KEY REFERENCES g_tri_ins(g_ti_cod),
+	g_ta_cod	NUMBER(8) FOREIGN KEY REFERENCES g_tri_aff(g_ta_cod)
 );
 
 DROP TABLE a_voe;
@@ -85,8 +85,8 @@ CREATE TABLE a_voe -- document Voeux.pdf
 DROP TABLE c_can_grp;
 CREATE TABLE c_can_grp
 (	
-	g_cn_cod	NUMBER(8) PRIMARY KEY REFERENCES g_can(g_cn_cod), -- SPECULATIF
-	c_gp_cod	NUMBER(8) PRIMARY KEY REFERENCES c_grp(g_cp_cod), -- SPECULATIF
+	g_cn_cod	NUMBER(8) FOREIGN KEY REFERENCES g_can(g_cn_cod), -- SPECULATIF
+	c_gp_cod	NUMBER(8) FOREIGN KEY REFERENCES c_grp(g_cp_cod), -- SPECULATIF
 	i_ip_cod	NUMBER(8),
 	c_cg_ran	NUMBER(8)
 );
