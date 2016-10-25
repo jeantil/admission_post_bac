@@ -4,9 +4,9 @@
 DROP TABLE c_grp; -- avec Oracle, pas de IF EXISTS
 CREATE TABLE c_grp
 (	
-	c_gp_cod			NUMBER(8) PRIMARY KEY, -- c_can_grp.c_gp_cod est probablement une FK pointant vers cette PK
-	g_tg_cod			NUMBER(8), -- pas d'info extérieure, mais tous les codes sont des NUMBER(8), FK ?
-	c_ja_cod			NUMBER(8) FOREIGN KEY REFERENCES c_jur_adm(c_ja_cod), -- pas d'info extérieure, mais tous les codes sont des NUMBER(8), FK ?
+	c_gp_cod		NUMBER(8) PRIMARY KEY, -- c_can_grp.c_gp_cod est probablement une FK pointant vers cette PK
+	g_tg_cod		NUMBER(8), -- pas d'info extérieure, mais tous les codes sont des NUMBER(8), FK ?
+	c_ja_cod		NUMBER(8) FOREIGN KEY REFERENCES c_jur_adm(c_ja_cod), -- pas d'info extérieure, mais tous les codes sont des NUMBER(8), FK ?
 	c_gp_eta_cla		NUMBER(3), -- pas d'info extérieure, un entier d'état, NUMBER(3) par prudence
 	c_gp_flg_sel		NUMBER(1), -- pas d'info extérieure, mais un flg (flag)
 	c_gp_flg_cla_oto 	NUMBER(1), -- pas d'info extérieure, mais un flg (flag)
@@ -21,7 +21,7 @@ CREATE TABLE sp_g_tri_ins
 DROP TABLE g_for;
 CREATE TABLE g_for -- document Etablissements.pdf
 (	
-	g_fr_cod		NUMBER(6) PRIMARY KEY, -- g_tri_ins.g_fr_cod_ins est une FK pointant vers cette PK
+	g_fr_cod	NUMBER(6) PRIMARY KEY, -- g_tri_ins.g_fr_cod_ins est une FK pointant vers cette PK
 	g_fr_reg_for	NUMBER(3),
 	g_fr_flg_sel	NUMBER(1),
 );
@@ -29,7 +29,7 @@ CREATE TABLE g_for -- document Etablissements.pdf
 DROP TABLE g_tri_ins;
 CREATE TABLE g_tri_ins -- document Etablissements.pdf
 (	
-	g_ti_cod			NUMBER(8) PRIMARY KEY,
+	g_ti_cod		NUMBER(8) PRIMARY KEY,
 	g_ti_flg_rec_idf	NUMBER(3),
 	g_ti_flh_sel		NUMBER(1),
 	g_fr_cod_ins		NUMBER(6) FOREIGN KEY REFERENCES g_for(g_fr_cod),
@@ -57,19 +57,23 @@ CREATE TABLE g_can -- document Candidats.pdf
 DROP TABLE i_ins;
 CREATE TABLE i_ins -- document Voeux.pdf
 (	
-	g_cn_cod	NUMBER(8) FOREIGN KEY REFERENCES g_can(g_cn_cod),
+	g_cn_cod	NUMBER(8) PRIMARY KEY,
 	g_ti_cod	NUMBER(8) PRIMARY KEY,
 	g_gf_cod	NUMBER(6),
 	i_ep_cod	NUMBER(3),
 	i_is_val	NUMBER(1),
-	i_is_dip_val 	NUMBER(3) -- étonnant pour un is (= booléen résumé)
+	i_is_dip_val 	NUMBER(3), -- étonnant pour un is (= booléen résumé)	
+	FOREIGN KEY (g_cn_cod) REFERENCES g_can(g_cn_cod)
 );
 
 DROP TABLE a_rec;
 CREATE TABLE a_rec -- document Etablissements.pdf
 (	
-	g_ti_cod	NUMBER(8) FOREIGN KEY REFERENCES g_tri_ins(g_ti_cod),
-	g_ta_cod	NUMBER(8) FOREIGN KEY REFERENCES g_tri_aff(g_ta_cod)
+	g_ti_cod	NUMBER(8) PRIMARY KEY,
+	g_ta_cod	NUMBER(8) PRIMARY KEY,
+	FOREIGN KEY (g_ti_cod) REFERENCES g_tri_ins(g_ti_cod),
+	FOREIGN KEY (g_ta_cod) REFERENCES g_tri_aff(g_ta_cod)
+	
 );
 
 DROP TABLE a_voe;
@@ -85,8 +89,10 @@ CREATE TABLE a_voe -- document Voeux.pdf
 DROP TABLE c_can_grp;
 CREATE TABLE c_can_grp
 (	
-	g_cn_cod	NUMBER(8) FOREIGN KEY REFERENCES g_can(g_cn_cod), -- SPECULATIF
-	c_gp_cod	NUMBER(8) FOREIGN KEY REFERENCES c_grp(g_cp_cod), -- SPECULATIF
+	g_cn_cod	NUMBER(8) PRIMARY KEY, 
+	c_gp_cod	NUMBER(8) PRIMARY KEY,
 	i_ip_cod	NUMBER(8),
-	c_cg_ran	NUMBER(8)
+	c_cg_ran	NUMBER(8),
+	FOREIGN KEY (g_cn_cod) REFERENCES g_can(g_cn_cod), -- SPECULATIF
+	FOREIGN KEY (c_gp_cod) REFERENCES c_grp(g_cp_cod), -- SPECULATIF
 );
