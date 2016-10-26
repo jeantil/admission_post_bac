@@ -27,7 +27,7 @@ END;
 ```
 
 # Code mis en forme
-Il paraît plus simple de faire un OR, puisque c'est un SELECT DISTINCT. A vérifier, ce type de refactoring est DELICAT !!
+Il paraît plus simple de faire un `OR`, puisque c'est un `SELECT DISTINCT`. A vérifier, ce type de refactoring est ***délicat*** !!
 ```
 BEGIN
   SELECT DISTINCT 1 INTO dummy
@@ -46,14 +46,24 @@ BEGIN
 END;
 ```
 
-# Explication détaillée
-Ce bloc de code rompt le traitement dans les cas suivants, en se fondant sur les tables `c_grp` (les groupes) et `c_can_grp` (lien n-n entre les candidats et les groupes). Si l'une des conditions suivantes est satisfaite, on arrête :
-* le groupe `o_c_gp_cod` (paramètre de la fonction) est non sélectif (`c_gp_flg_sel` = 0), AU MOINS UN candidat et son code apparait dans les liens groupes-candidats. Cela signifie que le groupe a déjà été traité.
-* le groupe est sélectif (`c_gp_flg_sel` = 1 ou 2), et on trouve AU MOINS UN candidat qui n'est pas NC ou AC (donc `i_ip_cod` = 5, classé). Cela signifie que le groupe a déjà été traité.
+***CETTE PARTIE N'A PAS D'INFLUENCE SUR LA MANIERE DONT LE RANG EST AFFECTE A CHAQUE CANDIDAT***
 
+# Explication détaillée
+Ce bloc de code rompt le traitement dans les cas suivants, en se fondant sur les tables `c_grp` (les groupes de formations) et `c_can_grp` (relation fixant le rang d'un candidat dans une groupe de formations). 
+
+Si les conditions suivantes sont satisfaites, on arrête le traitement :
+* le groupe de formations est déjà mis en relation avec les candidats (attribution d'un rang à au moins un candidat pour ce groupe de formations) ;
+* l'une au moins des conditions est satisfaite : 
+    * le groupe de formations `o_c_gp_cod` (paramètre de la fonction) est non sélectif (`c_gp_flg_sel` = 0), AU MOINS UN candidat et son code apparait dans les liens groupes-candidats. Cela signifie que le groupe a déjà été traité.
+    * le groupe est sélectif (`c_gp_flg_sel` = 1 ou 2), et on trouve AU MOINS UN candidat qui n'est pas NC ou AC (donc `i_ip_cod` = 5, classé). Cela signifie que le groupe a déjà été traité.
+
+Pour faire simple, le traitement est arrêté dans les cas suivants :
+* groupe non sélectif avec au moins un candidat déjà traité ;
+* groupe sélectif avec au moins un candidat déjà classé.
+	
 ## Deux remarques
-1. Cela parait un peu tard dans le script pour se poser la question, mais pourquoi pas ?
-2. La valeur `i_ip_cod` a du être initialisée à 4 ou 6 pour les groupes sélectifs, mais ailleurs...
+1. Cela aurait pu prendre place avant le calcul de `l_six_voe` ;
+2. La valeur `i_ip_cod` a pu être initialisée à 4 (non classé) ou 6 (à classer) pour les groupes sélectifs, mais ailleurs...
 
 # Résumé
 On ne retraite pas un groupe déjà traité.

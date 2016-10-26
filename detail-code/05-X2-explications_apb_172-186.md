@@ -15,14 +15,19 @@ BEGIN
 	THEN l_six_voe:=0; -- pour les autres groupes, on n'utilise pas les 6 voeux
 END;
 ```
+# Questions en suspens
+* quelle est la signification de ces *magic numbers* ?
 
-# Explication détaillée :
+# Explication détaillée
+Met la variable `l_six_voe` à 0 ou 1. Cette valeur ne dépend que de la formation, **pas du candidat**.
+On considère les lignes de la table `g_tri_ins` qui correspondent à la formation (paramètre `o_g_ti_cod`), tri_ins désignat probablement un triplet établissement - filière - formation.
 
-Met la variable `l_six_voe` à 0 ou 1. Cette valeur ne dépend que du groupe et de la formation, PAS DU CANDIDAT.
-On considère les lignes de la table `g_tri_ins` qui correspondent à la formation (paramètre `o_g_ti_cod`).
 `l_six_voe vaut` 1 si les conditions cumulatives sont satisfaites :
-* le paramètre de la fonction principale `o_g_tg_cod` est compris dans les valeurs 21,25,26,41,45,46 : d'après le commentaire, groupe néo concerné par des néo d'IDF (??).
+* le groupe de formations paramètre de la fonction principale (`o_g_tg_cod`) est compris dans les valeurs 21,25,26,41,45,46 : d'après le commentaire, "groupe concerné par des néo d'IDF".
 * `g_tri_ins.g_ti_flg_rec_idf` est égale à 2,3,5,6 : d'après le commentaire, formation type idf.
 Sinon le paramètre est à 0.
 
+Il semble que ces deux conditions servent à identifier les "L1 dites à capacité insuffisante" (rapport igen 2012-123, p. 16). 
+
+# Résumé
 Ce paramètre joue un rôle important dans le tri des non EFE, puisqu'il active un tri sur la mystérieuse fonction `six_voeu_L1` de la ligne 102
