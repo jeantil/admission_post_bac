@@ -54,7 +54,7 @@ ORDER BY 2, 3, 4, 5;
 ```
 
 # Code mis en forme :
-Il paraît plus naturel de faire un `LEFT JOIN` sur la table `a_voe`, et de mettre les valeurs à 0 lorsque la jointure ne s'est pas faite
+Il paraît plus naturel de faire un `LEFT JOIN` sur la table `a_voe`, et de mettre certaines valeurs à 0 lorsque la jointure ne s'est pas faite
 ```
 -- classement aléatoire sur voeu 1 groupé relatif
 CURSOR classement_aleatoire_efe IS
@@ -105,6 +105,8 @@ AND i_ip_cod IN (4, 5))
 ```
 
 La table `c_can_grp` contient la relation entre les candidats et les groupes. Si elle contient une correspondance entre notre groupe et un candidat avec un `c_can_grp.i_ip_cod`  valant 4 (NC = non classé) ou 5 (C = classé), c'est que ce candidat est déjà passé par les étapes suivantes (voir lignes 269 et suivantes). Un candidat pour lequel il existe une correspondance candidat-groupe mais pour lequel `i_ip_cod` vaut 6 (AC = à classer) est conservé.
+
+Cela permet également de se prémunir contre les doublons éventuels au niveau des curseurs.
 
 **Le code précédent exclut donc les candidats pour lesquels il y a eu affectation d'un rang dans un groupe, sauf s'ils sont encore "à classer"**.
 

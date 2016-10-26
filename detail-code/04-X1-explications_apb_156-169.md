@@ -16,6 +16,8 @@
 END;
 ```
 
+***CETTE PARTIE N'A PAS D'INFLUENCE SUR LA MANIERE DONT LE RANG EST AFFECTE A CHAQUE CANDIDAT***
+
 # Explication détaillée
 Le `SELECT` sur la table all_catalog doit renvoyer zéro ou une ligne, selon que l'utilisateur courant a accès ou non aux tables possédées par 'XXXXXX' (modifié avant scan pour transmission PDF ?).
 Il semble que 'XXXXXX' possède les tables sur le serveur de prod, mais pas sur celui de dev, ce qui est utilisé pour différencier les deux serveurs.
