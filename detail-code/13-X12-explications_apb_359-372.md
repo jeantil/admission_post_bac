@@ -17,6 +17,8 @@ END IF;
 ```
 
 # Explication détaillée
-Comme au bloc précédent, la valeur retour prend la valeur de retour d'une fonction, `valid_classement_def(...)`. Le nom fait moins penser à un effet de bord, mais c'est à nouveau une possiblité.
+***CETTE PARTIE N'A **EN PRINCIPE** PAS D'INFLUENCE SUR LA MANIERE DONT LE RANG EST AFFECTE A CHAQUE CANDIDAT***
+
+Comme au bloc précédent, la valeur retour prend la valeur de retour d'une fonction, `valid_classement_def(...)`.
 
 A nouveau, si l'opération se passe mal (retour différent de 0), tout est annulé.
