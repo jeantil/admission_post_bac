@@ -43,6 +43,12 @@ UNIQUE_CONSTRAINT EXCEPTION;
 PRAGMA EXCEPTION_INIT (UNIQUE_CONSTRAINT, -00001);
 ```
 
+# Questions en suspens
+* De quelle manière la fonction est appelée ?
+* De quelle manière les groupes de formations sont constitués ?
+* Quel est le sens précis des différents paramètres ?
+* Comment, à partir du rang, est réalisé le couplage candidat-formation ?
+
 # Explication détaillée
 C'est la déclaration des paramètres de la fonction, des variables locales et d'une constante. Il est évidemment impossible de déterminer avec certitude la signification de toutes ces variables.
 
@@ -50,14 +56,17 @@ C'est la déclaration des paramètres de la fonction, des variables locales et d
 Il y a des paramètres d'entrée (`IN`) et de sortie (`OUT`), en plus de la valeur de retour qui sera à 0 si tout s'est bien déroulé. 
 
 Pour les paramètres de sortie, c'est assez simple : mess_err contiendra, après appel de la fonction, le message à afficher en erreur ; mess_aff contiendra, après appel de la fonction, le message à afficher en sortie standard. 
-Certains paramètres d'entrée ne sont utilisés que dans la construction de ces messages, soit "o_g_ea_cod_ins" (ligne 207 etc.).
+Certains paramètres d'entrée ne sont utilisés que dans la construction de ces messages :
+* `o_g_ea_cod_ins` (le code établissement de l'inscription, cf. commentaire ligne 261) ;
 Certains paramètres d'entrée sont utilisés que pour la construction de la valeur de retour, via des fonctions : 
-* `login`, `type_login`, `mode_dev`, `confirm`, `saio` et `nip` apparaissent aux lignes 346 et suivantes, puis 361 et suivantes et 375 et suivantes, au niveau d'une validation (`MAJ_etat_classement`, `valid_classement_def`, `valid_classement_formation`).
+* `login`, `type_login`, `mode_dev`, `confirm`, `saio` et `nip` apparaissent aux lignes 346 et suivantes, puis 361 et suivantes et 375 et suivantes, au niveau d'une validation (`MAJ_etat_classement`, `valid_classement_def`, `valid_classement_formation`) :
+	* `saio` : service administratif d'information et d'orientation.
 * `indic` est nécessaire pour déterminer si le traitement va avoir lieu. Intervient également dans les valeurs de retour
 * le reste :
-    * `o_g_ti_cod` : code de la formation visée par les candidats, o_c_gp_cod code du groupe des candidats,
-    * `o_g_tg_cod` intervient pour déterminer si on utilisera la fonction `six_voeu_L1`, `o_g_tg_cod IN (21, 25, 26, 41, 45, 46)` doit signifier, d'après les commentaires, que le groupe  concerné par des néo d'Île de France.
-
+    * `o_g_ti_cod` : code de la formation visée par les candidats (cf. ligne 261)
+	* `o_c_gp_cod` : code du groupe (= en gros filière + académie) auquel appartient la formation (cf. ligne 206). La fonction attribue un rang dans ce groupe (cf. lignes 271 sqq).
+    * `o_g_tg_cod` : qualifie la nature du groupe. Ce paramètre intervient pour déterminer si on utilisera la fonction `six_voeu_L1`, `o_g_tg_cod IN (21, 25, 26, 41, 45, 46)` devant signifier, d'après les commentaires, que le groupe (de formations) est "concerné par des néo d'Île de France".
+	
 ## Les variables locales
 * `retour` : la valeur de retour
 * `X` : l'étape courante, utilisé pour les messages en cas de rupture du traitement
@@ -71,10 +80,8 @@ Certains paramètres d'entrée sont utilisés que pour la construction de la val
 `UNIQUE_CONSTRAINT` sert à intercepter les violations de la contrainte d'unicité d'un enregistrement, c'est-à-dire lorsqu'on cherche à insérer dans une table un enregistrement qui à le même identifiant (PK). Le traitement utilise cette technique au moment de l'insertion dans la table `c_can_grp`, qui contient le classement de chaque candidat. Si une insertion aa déjà été faite auparavant, le traitement le détecte et s'adapte.
 
 # Résumé
-On verra que cette fonction attribue un rang pour un groupe de candidats et une formation visée.
+On verra que cette fonction attribue un rang à chaque candidat pour une formation déterminée par les paramètres.
 
-Trois paramètres interviennent de manière essentielle au niveau du traitement réalisé dans la fonction principale : 
-* `o_g_ti_cod` : code de la formation visée par les candidats ;
-* `o_c_gp_cod` : code du groupe des candidats ;
-* `o_g_tg_cod` : une information sur le groupe des candidats.
-
+Trois paramètres interviennent de manière essentielle au niveau du traitement réalisé dans la fonction principale `o_g_ti_cod`, `o_c_gp_cod` et `o_g_tg_cod` :
+* `o_g_ti_cod` et `o_c_gp_cod` déterminent une formation à laquelle est inscrit un candidat : formation précise, liée à un établissement + filère & académie (le triplet détermine une inscription).
+* `o_g_tg_cod` qualifie la nature du groupe et intervient pour déterminer si on utilisera la fonction `six_voeu_L1` avant l'ordre des voeux.
