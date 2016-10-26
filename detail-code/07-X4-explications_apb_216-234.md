@@ -30,10 +30,10 @@ Avec jointure
 BEGIN
   X:='04';
   SELECT 
-	g_tg_cod, c_gp_flg_sel, 
-	g_ea_cod_ges, ja.c_ja_cod, 
-	c_tj_cod, NVL(g_ti_flh_sel, g_fr_flg_sel), 
-	c_gp_eta_cla
+	gp.g_tg_cod, gp.c_gp_flg_sel, 
+	ti.g_ea_cod_ges, ja.c_ja_cod, 
+	ja.c_tj_cod, NVL(ti.g_ti_flh_sel, fr.g_fr_flg_sel), 
+	gp.c_gp_eta_cla
   INTO 
 	l_g_tg_cod, l_c_gp_flg_sel,
 	l_g_ea_cod_ges, l_c_ja_cod, 
@@ -56,16 +56,26 @@ BEGIN
     RETURN 1;
 END;
 ```
-
+		
 # Explication détaillée
-A nouveau un cas de rupture du traitement, si on ne parvient pas à joindre les tables utilisées et à tester la présence de la formation et du groupe. Informellement, les conditions suivantes doivent être cumulées : 
-* le groupe et la formation passés en paramètres possèdent une juridiction administrative identique ;
-* `ti.g_fr_cod_ins=fr.g_fr_cod` : ???
-Le message ne semble pas recouvrir tous les cas qui mènent à un result set vide.
+***CETTE PARTIE N'A PAS D'INFLUENCE SUR LA MANIERE DONT LE RANG EST AFFECTE A CHAQUE CANDIDAT***
 
+A nouveau un cas de rupture du traitement, si on ne parvient pas à joindre les tables utilisées et à tester la présence de la formation et du groupe de formations. Informellement, les conditions suivantes doivent être cumulées : 
+* le groupe de formation passé en paramètre doit exister dans la base, ainsi que la formation passée en paramètre ;
+* le groupe possède un unique jury d'admission pour cette formation ;
+* la formation (objet d'inscription) existe dans les formations.
+
+Le message pourraît ne pas couvrir tous les cas qui mènent à un result set vide.
+
+## Variable locales
 Si les conditions sont satisfaites, les variables `l_g_tg_cod`, `l_c_gp_flg_sel`, `l_g_ea_cod_ges`, `l_c_ja_cod`, `l_c_tj_cod`, `l_g_flh_sel`, `l_c_gp_eta_cla` se voient affecter les valeurs sélectionnées.
-
-A noter en particulier la valeur `NVL(g_ti_flh_sel, g_fr_flg_sel)` qui est affectée à `l_g_flh_sel`. Elle vaut `g_tri_ins.g_ti_flh_sel`, ou si cette valeur est nulle, `g_for.g_fr_flg_sel` (fonction `NVL`). Si cette valeur doit être à 0 pour que le code passe en prod. Cela signifie peut-être que la formation n'est pas sélective (je manque d'infos métier à ce niveau).
+* `l_g_tg_cod` : inutilisé ;
+* `l_c_gp_flg_sel` : apparaît dans un message précédé de "Flag Sel" ;
+* `l_g_ea_cod_ges` : code d'établissement, paramètre des trois fonctions de la fin mais inutilisé ailleurs ;
+* `l_c_ja_cod` : code du jury d'admission, paramètre des trois fonctions de la fin mais inutilisé ailleurs ;
+* `l_c_tj_cod` : indéterminé, paramètre des trois fonctions de la fin mais inutilisé ailleurs ;
+* `l_g_flh_sel` : signifie probablement que le groupe ou la formation sont sélectifs. Le traitement sera interrompu à l'étape suivante.
+* `l_c_gp_eta_cla` : l'état du classement pour ce groupe de formations. Mis à jour en fin de traitement.
 
 # Résumé
-Si la formation et le groupe sont trouvés (à la fois dans les tables qui les contiennent et en tant que référence dans d'autres tables utiles), on continue le traitement.
+Si la formation et le groupe doivent être trouvés et certaines informations récupérées dans la base pour continuer le traitement.

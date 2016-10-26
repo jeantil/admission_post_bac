@@ -16,7 +16,7 @@ BEGIN
 END;
 ```
 # Questions en suspens
-* quelle est la signification de ces *magic numbers* ?
+* quelle est la signification **précise** de ces *magic numbers* ?
 
 # Explication détaillée
 Met la variable `l_six_voe` à 0 ou 1. Cette valeur ne dépend que de la formation, **pas du candidat**.

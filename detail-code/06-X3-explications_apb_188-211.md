@@ -46,9 +46,9 @@ BEGIN
 END;
 ```
 
+# Explication détaillée
 ***CETTE PARTIE N'A PAS D'INFLUENCE SUR LA MANIERE DONT LE RANG EST AFFECTE A CHAQUE CANDIDAT***
 
-# Explication détaillée
 Ce bloc de code rompt le traitement dans les cas suivants, en se fondant sur les tables `c_grp` (les groupes de formations) et `c_can_grp` (relation fixant le rang d'un candidat dans une groupe de formations). 
 
 Si les conditions suivantes sont satisfaites, on arrête le traitement :
