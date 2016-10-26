@@ -104,7 +104,7 @@ AND i.g_gf_cod=c_gp_cod
 AND i_ip_cod IN (4, 5))
 ```
 
-La table `c_can_grp` contient la relation entre les candidats et les groupes. Si elle contient une correspondance entre notre groupe et un candidat avec un `c_can_grp.i_ip_cod`  valant 4 (NC = non classé) ou 5 (C = classé), c'est que ce candidat est déjà passé par les étapes suivantes (voir lignes 269 et suivantes). Un candidat pour lequel il existe une correspondance candidat-groupe mais pour lequel `i_ip_cod` vaut 6 (AC = à classer) est conservé.
+La table `c_can_grp` contient la relation entre les candidats et les groupes. Si elle contient une correspondance entre notre groupe et un candidat avec un `c_can_grp.i_ip_cod` valant 4 (NC = non classé, typiquement lorsque le bac n'est pas validé) ou 5 (C = classé), c'est que ce candidat est déjà passé par les étapes suivantes (voir lignes 269 et suivantes). Un candidat pour lequel il existe une correspondance candidat-groupe mais pour lequel `i_ip_cod` vaut 6 (AC = à classer) est conservé.
 
 Cela permet également de se prémunir contre les doublons éventuels au niveau des curseurs.
 
