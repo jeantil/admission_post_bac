@@ -102,5 +102,7 @@ Même point surprenant que précédemment : on ne voit pas la mise à jour de i_
 ## Ordre de sélection des candidats
 Il y a une différence importante avec les EFE : le groupe et la formation ont déterminé une valeur de `l_six_voe` (voir lignes 172 à 186). Si cette valeur vaut 1, on prend en compte une mystérieuse fonction `six_voeu_L1(c.g_cn_cod, g_aa_cod_bac_int, g_cn_flg_int_aca, o_g_tg_cod)` avant d'appliquer les mêmes règles que pour le EFE. Si cette valeur vaut 0, le tri suit les mêmes règles qu'auparavant.
 
+La fonction est supposée renvoyer 1 si le candidat a fait six voeux de L1 (du même domaine) pour une L1 à capacité insuffisante, 0 sinon.
+
 # Résumé
-Il y des formations et groupes pour lesquelles le tri est réalisé prioritairement sur la base d'une fonction absente du code fourni. Si la formation ne fait pas partie de cette catégorie, ou si les valeurs de cette fonction sont les mêmes pour deux candidats, ils seront triés par ordre de voeux comme les EFE.
+Il y des formations et groupes pour lesquelles le tri est réalisé prioritairement sur la base d'une fonction absente du code fourni, mais qui doit représenter le choix par le candidat de six L1 (du même domaine). Si la formation ne fait pas partie de cette catégorie, ou si les valeurs de cette fonction sont les mêmes pour deux candidats, ils seront triés par ordre de voeux comme les EFE.
