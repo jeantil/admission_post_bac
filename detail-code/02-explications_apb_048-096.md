@@ -135,7 +135,7 @@ Ce sont les ordres de voeux, du plus petit au plus grand numéro d'ordre. Le tri
 
 Les commentaires et le document transmis par l'EN en mai 2016 permettent de conclure que :
 * `voeu.a_ve_ord_vg_rel` est le numéro d'ordre du voeu par rapport aux autres voeux groupés licence (= voeu portant sur une filière et une académie) ;
-* `voeu.a_ve_ord_aff` est le numéro d'ordre absolu du voeu par rapport aux autres voeux groupés licence ;
+* `voeu.a_ve_ord_aff` est le numéro d'ordre absolu du voeu par rapport à tous les autres voeux ;
 * `voeu.a_vg_ord` est le numéro d'ordre du voeu dans le groupe formé par le voeu groupé.
 
 ## Cas des candidats qui n'ont pas classé la formation
