@@ -34,15 +34,18 @@ END LOOP;
 ```
 
 # Explication détaillée
-Enfin on passe aux EFE, dans l'ordre des voeux croissants (cf. ligne 96). La variable `i`, qui sert à FIXER LE RANG de 1 à N, a été mise à 1 à la ligne 266.
+***C'EST LE DÉBUT DES ATTRIBUTIONS DE RANG POUR UN GROUPE DE FORMATIONS. CE SONT LES EFE QUI PASSENT LES PREMIERS, DANS L'ORDRE DES VOEUX CROISSANTS (CF. LIGNE 96)***
+
+La variable `i`, qui sert à **fixer le rang** de 1 à N, a été mise à 1 à la ligne 266.
 
 On parcourt les candidats EFE, et on réalise les opérations suivates :
 * si le lien entre le candidat et le groupe n'a pas été fait, on le fait en donnant le `cn_cod` (code d'inscription du candidat) et `gp_cod` (code du groupe, paramètre de la fonction), puis un `i_ip_cod` toujours à 5 (classé) et enfin le `c_cg_ran` (le rang) courant `i`.
-* si le lien a déjà été fait, et que le `i_ip_cod` est à 6 (candidat à classer), on met à jour ce lien avec le `i_ip_cod` à 5 et le rang courant. On peut supposer que le rang était nul avant.
-* si le lien a dajà été fait, mais qu'on a un `i_ip_cod` différent de 6 (par ex. 5 si on avait un doublon dans le `SELECT` du curseur), on arrêté le traitement et `ROLLBACK`.
+* si le lien a déjà été fait mais que le `i_ip_cod` est à 6 (candidat à classer), on met à jour ce lien avec le `i_ip_cod` à 5 et le rang courant. On peut supposer que le rang était nul avant.
+* si le lien a dajà été fait, mais qu'on a un `i_ip_cod` différent de 6 (par ex. 5 si on avait un doublon dans le `SELECT` du curseur), il s'agit d'une erreur, on arrête le traitement et `ROLLBACK`. Ce cas devrait être prévenu par le `NOT EXISTS` de la définition du curseur.
+
 Après chaque candidat, le rang courant est incrémenté.
 
 # Résumé
 Deux types de cas peuvent se présenter : le candidat n'est pas présent dans la table de liens entre candidats et groupes (auquel cas on lui donne le rang courant, selon l'ordre prévu ligne 96), soit le candidat est présent, mais c'est un candidat à classer, pas un candidat classé. Tout autre cas annule le traitement.
 
-Après ce traitement, il est garanti que les candidats ne sont pas à classer, que les indices de rang se suivent. Il est possible d'avoir "recasé" des candidats à classer.
+Après cette opération, il est garanti que les candidats ne sont pas à classer, que les indices de rang se suivent. Il est possible d'avoir au cours de l'opération, "recasé" des candidats à classer.

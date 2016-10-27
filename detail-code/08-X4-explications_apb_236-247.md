@@ -15,8 +15,11 @@ END IF;
 ```
 
 # Explication détaillée
+***CETTE PARTIE N'A PAS D'INFLUENCE SUR LA MANIERE DONT LE RANG EST AFFECTE A CHAQUE CANDIDAT***
+
 Les principales parties de ce bloc ont déjà été vues.
 
-On rompt le traitement si on est en prod (`IS_prod = 1` et, par définition, ligne 163, `indic=10`) et que `l_g_flh_sel` est null ou différent de 0. Pour mémoire, `l_g_flh_sel` vaut à ce point `NVL(g_ti_flh_sel, g_fr_flg_sel)`, ce qui signifie peut-être que la formation n'est pas sélective (je manque d'infos métier à ce niveau).
+On rompt le traitement si on est en prod (`IS_prod = 1` et, par définition, ligne 163, `indic=10`) et que `l_g_flh_sel` est null ou différent de 0. 
 
-Mais le message d'erreur concerne une autre variable, `l_c_gp_flg_sel`, qui a été initialisée dans le bloc précédent et qui marque un groupe sélectif.
+# Résumé
+Il faut être soit sur le serveur de dev, soit en présence d'une formation non sélective.

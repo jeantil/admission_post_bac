@@ -15,7 +15,12 @@ END IF;
 ```
 
 # Explication détaillée
-Comme au bloc précédent, la valeur retour prend la valeur de retour d'une fonction, `valid_classement_formation(...)`. Le nom fait moins penser à un effet de bord, mais c'est à nouveau une possiblité.
+***CETTE PARTIE N'A **EN PRINCIPE** PAS D'INFLUENCE SUR LA MANIERE DONT LE RANG EST AFFECTE A CHAQUE CANDIDAT***
 
-Cela fait trois fonctions dont nous ignorons le fonctionnement (en plus de la fonction `six_voeu_L1` de la ligne 102) et qui peuvent éventuellement intervenir au niveau du rang (en tout cas rien n'interdit que ce soit le cas).
+Comme au bloc précédent, la valeur retour prend la valeur de retour d'une fonction, `valid_classement_formation(...)`.
+
 A nouveau, si l'opération se passe mal (retour différent de 0), tout est annulé.
+
+## Remarque
+Cela fait trois fonctions dont nous ignorons le fonctionnement (en plus de la fonction `six_voeu_L1` de la ligne 102).
+

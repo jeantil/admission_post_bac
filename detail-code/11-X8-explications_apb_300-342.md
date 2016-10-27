@@ -46,15 +46,22 @@ END LOOP;
 ```
 
 # Explication détaillée
-Le fonctionnement de ce bloc est semblable à celui du bloc précédent. La variable i est conservée depuis ledit bloc, donc les EFE ont bien un rang inférieur aux autres.
+***C'EST LA SUITE DES ATTRIBUTIONS DE RANG POUR UN GROUPE DE FORMATIONS.***
+
+Le fonctionnement de ce bloc est semblable à celui du bloc précédent. La variable `i` est conservée depuis ledit bloc, donc les EFE ont bien un rang inférieur aux autres.
 
 Le traitement est le suivant :
-* tous les candidats dont le diplôme n'est pas validé (`i_is_dip_val` = 1) se voient attribuer un état `i_ip_cod` 4, c'est-à-dire "à classer" et un rang nul (si possible).
+* tous les candidats dont le diplôme (le bac !) n'est pas validé (`i_is_dip_val` = 1) se voient attribuer un état `i_ip_cod` 4, c'est-à-dire "non classé" et un rang nul (si possible).
 * les autres candidats sont traités comme dans le bloc EFE, mais après les EFE. Pour mémoire :
 	* si le lien entre le candidat et le groupe n'a pas été fait, on le fait en donnant le cn_cod (code d'inscription du candidat) et `gp_cod` (code du groupe, paramètre de la fonction), puis un `i_ip_cod` toujours à 5 et enfin le `c_cg_ran` (le rang) courant `i`.
-	* si le lien a déjà été fait, et que le `i_ip_cod` est à 6 (candidat à classer), on met à jour ce lien avec le `i_ip_cod` à 5 et le rang courant. Ce qui signifie que le candidat a un rang plus élevé.
+	* si le lien a déjà été fait, et que le `i_ip_cod` est à 6 (candidat à classer), on met à jour ce lien avec le `i_ip_cod` à 5 (classé) et le rang courant. Ce qui signifie que le candidat a un rang plus élevé.
 	* si le lien a dajà été fait, mais qu'on a un `i_ip_cod` différent de 6 (par ex. 5 si on avait un doublon dans le `SELECT` du curseur), on arrêté le traitement et `ROLLBACK`.
 Après chaque candidat, le rang courant est incrémenté.
 
 # Résumé
-Trois types de cas peuvent se présenter : le diplôme n'est pas validé, le candidat devient AC (à classer), avec un rang indéfini. Sinon, soit le candidat n'est pas présent dans la table de liens entre candidats et groupes (auquel cas on lui donne le rang courant, selon l'ordre prévu ligne 96), soit le candidat est présent, mais c'est un candidat à classer, pas un candidat classé. Tout autre cas de figure annule le traitement.
+Trois types de cas peuvent se présenter : 
+* le diplôme du bac n'est pas validé, le candidat devient NC (non classé), avec un rang indéfini. 
+* le candidat n'est pas présent dans la table de liens entre candidats et groupes, auquel cas on lui donne le rang courant, selon l'ordre prévu ligne 96
+* le candidat est présent, mais c'est un candidat à classer, pas un candidat classé : on lui donne le rang courant. 
+
+Tout autre cas de figure annule le traitement.

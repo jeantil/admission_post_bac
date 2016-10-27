@@ -19,9 +19,11 @@ END IF;
 ``` 
 
 # Explication détaillée
+***CETTE PARTIE N'A PAS D'INFLUENCE SUR LA MANIERE DONT LE RANG EST AFFECTE A CHAQUE CANDIDAT***
+
 A nouveau, rupture possible du traitement.
 
-On compte les lignes de la table `i_ins` (inscriptions ?) qui correspondent à la formation et au groupe, pour lesquels `is_val` est à 1 (non encore classé, cf. ligne 44), mais `i_ep_code` n'est pas égal à 0,2,3,7. Selon le début du code, seuls les non encore classés sont traités (voir les conditions sur les définitions des curseurs). Or là on semble bloquer dès qu'un des ces non encore classés possède un i_ep_cod particulier. D'après le message d'erreur, cela note les dossiers non pointés.
+On compte les lignes de la table `i_ins` (inscriptions, relie un candidat et une formation) qui correspondent à la formation et au groupe paramètres et pour lesquels `i_is_val` est à 1 (inscription non encore classé, cf. ligne 44) et `i_ep_code` n'est pas égal à 0,2,3,7. Selon le début du code, seuls les non encore classés sont traités (voir les conditions sur les définitions des curseurs). 
 
 # Résumé
-Dès qu'un dossier non encore classé n'est pas pointé, on rompt le traitement.
+Pour la formation passée en paramètre, tous les candidats qui ont fait une inscription doivent avoir leur dossier pointé. Sinon, le traitement est annulé.
