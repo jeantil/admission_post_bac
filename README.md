@@ -5,7 +5,7 @@ nationale
 
 Code source publié
 ---
-En [PDF](http://api.rue89.nouvelobs.com/sites/news/files/assets/document/2016/10/algorithme.pdf) qui contient un scan du code imprimé parcequ'on est en 2016
+En [PDF](http://www.droitsdeslyceens.com/medias/files/algorithme.pdf) qui contient un scan du code imprimé parcequ'on est en 2016
 Article sur rue 89 :  http://tempsreel.nouvelobs.com/rue89/rue89-nos-vies-connectees/20161018.RUE4061/voici-le-code-source-d-admission-post-bac-qu-ont-recu-les-lyceens.html
 
 
@@ -13,7 +13,7 @@ Comprendre l'algorithme
 ---
 Selon les commentaires laissés sur mon gist initial:
 
-Pour ceux qui veulent vérifier que l'algo est complet : [PDF ](http://api.rue89.nouvelobs.com/sites/news/files/assets/document/2016/10/algorithme.pdf)
+Pour ceux qui veulent vérifier que l'algo est complet : [PDF](http://www.droitsdeslyceens.com/medias/files/algorithme.pdf)
 ----
 **Ces commentaires (RUE89) peuvent aider à la compréhension :**
 
