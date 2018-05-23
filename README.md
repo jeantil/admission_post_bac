@@ -3,6 +3,8 @@
 Code source d'Admission post-bac envoyé par le ministère de l'Education
 nationale
 
+**ATTENTION** Le logiciel admission post-bac n'est plus en service, il a été remplacé en 2018 par le logiciel parcoursup dont le code est publié sur [framagit](https://framagit.org/users/parcoursup/projects) par l'équipe en charge du projet. 
+
 Code source publié
 ---
 En [PDF](http://www.droitsdeslyceens.com/medias/files/algorithme.pdf) qui contient un scan du code imprimé parcequ'on est en 2016
